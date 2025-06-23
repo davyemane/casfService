@@ -50,3 +50,33 @@
 [2025-06-23 22:33:28 +0100] [34733] [INFO] Booting worker with pid: 34733
 [2025-06-23 22:33:28 +0100] [34734] [INFO] Booting worker with pid: 34734
 [2025-06-23 22:33:28 +0100] [34735] [INFO] Booting worker with pid: 34735
+[2025-06-23 22:34:03 +0100] [34702] [CRITICAL] WORKER TIMEOUT (pid:34735)
+[2025-06-23 22:34:03 +0100] [34735] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-23 22:34:03 +0100] [34735] [INFO] Worker exiting (pid: 34735)
+[2025-06-23 22:34:04 +0100] [35067] [INFO] Booting worker with pid: 35067
