@@ -1,0 +1,52 @@
+[2025-06-23 22:32:40 +0100] [34353] [INFO] Starting gunicorn 23.0.0
+[2025-06-23 22:32:40 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:40 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:41 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:41 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:42 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:42 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:43 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:43 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:44 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:44 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:45 +0100] [34353] [ERROR] Can't connect to ('0.0.0.0', 8000)
+[2025-06-23 22:33:02 +0100] [34452] [INFO] Starting gunicorn 23.0.0
+[2025-06-23 22:33:02 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:02 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:03 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:03 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:04 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:04 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:05 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:05 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:06 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:06 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:07 +0100] [34452] [ERROR] Can't connect to ('0.0.0.0', 8000)
+[2025-06-23 22:33:27 +0100] [34702] [INFO] Starting gunicorn 23.0.0
+[2025-06-23 22:33:27 +0100] [34702] [INFO] Listening at: http://0.0.0.0:8000 (34702)
+[2025-06-23 22:33:27 +0100] [34702] [INFO] Using worker: sync
+[2025-06-23 22:33:27 +0100] [34708] [INFO] Booting worker with pid: 34708
+[2025-06-23 22:33:27 +0100] [34709] [INFO] Booting worker with pid: 34709
+[2025-06-23 22:33:27 +0100] [34710] [INFO] Booting worker with pid: 34710
+[2025-06-23 22:33:27 +0100] [34711] [INFO] Booting worker with pid: 34711
+[2025-06-23 22:33:27 +0100] [34712] [INFO] Booting worker with pid: 34712
+[2025-06-23 22:33:27 +0100] [34713] [INFO] Booting worker with pid: 34713
+[2025-06-23 22:33:27 +0100] [34714] [INFO] Booting worker with pid: 34714
+[2025-06-23 22:33:27 +0100] [34718] [INFO] Booting worker with pid: 34718
+[2025-06-23 22:33:27 +0100] [34719] [INFO] Booting worker with pid: 34719
+[2025-06-23 22:33:27 +0100] [34720] [INFO] Booting worker with pid: 34720
+[2025-06-23 22:33:27 +0100] [34721] [INFO] Booting worker with pid: 34721
+[2025-06-23 22:33:27 +0100] [34722] [INFO] Booting worker with pid: 34722
+[2025-06-23 22:33:27 +0100] [34723] [INFO] Booting worker with pid: 34723
+[2025-06-23 22:33:27 +0100] [34724] [INFO] Booting worker with pid: 34724
+[2025-06-23 22:33:28 +0100] [34725] [INFO] Booting worker with pid: 34725
+[2025-06-23 22:33:28 +0100] [34726] [INFO] Booting worker with pid: 34726
+[2025-06-23 22:33:28 +0100] [34727] [INFO] Booting worker with pid: 34727
+[2025-06-23 22:33:28 +0100] [34728] [INFO] Booting worker with pid: 34728
+[2025-06-23 22:33:28 +0100] [34729] [INFO] Booting worker with pid: 34729
+[2025-06-23 22:33:28 +0100] [34730] [INFO] Booting worker with pid: 34730
+[2025-06-23 22:33:28 +0100] [34731] [INFO] Booting worker with pid: 34731
+[2025-06-23 22:33:28 +0100] [34732] [INFO] Booting worker with pid: 34732
+[2025-06-23 22:33:28 +0100] [34733] [INFO] Booting worker with pid: 34733
+[2025-06-23 22:33:28 +0100] [34734] [INFO] Booting worker with pid: 34734
+[2025-06-23 22:33:28 +0100] [34735] [INFO] Booting worker with pid: 34735

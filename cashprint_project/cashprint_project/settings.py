@@ -189,17 +189,11 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['file'],
             'level': 'INFO',
-            'propagate': False,
+            'propagate': True,
         },
-        'core': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG' if DEBUG else 'INFO',
-            'propagate': False,
-        },
-    },
-}
+    },}
 
 # Session Configuration
 SESSION_COOKIE_AGE = 86400  # 24 heures
