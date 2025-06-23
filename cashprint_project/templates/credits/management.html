@@ -1,0 +1,361 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% load cashprint_filters %}
+
+{% block title %}Gestion des crédits - {{ CASHPRINT_SETTINGS.COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Mes crédits</li>
+                </ol>
+            </nav>
+            <h1 class="h2 mb-2">Gestion des crédits</h1>
+            <p class="text-muted">Rechargez votre compte et consultez l'historique de vos transactions</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Current Balance -->
+        <div class="col-lg-4">
+            <div class="card balance-card text-center mb-4">
+                <div class="card-body p-4">
+                    <div class="balance-icon mb-3">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Solde actuel</h3>
+                    <div class="balance-amount">
+                        {{ profile.credits_balance|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+                    </div>
+                    {% if profile.credits_balance < 1000 %}
+                    <div class="alert alert-warning mt-3">
+                        <small><i class="fas fa-exclamation-triangle me-1"></i>Solde faible</small>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Quick Recharge -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>Recharge rapide
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100" onclick="quickRecharge(1000)">
+                                1,000 {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100" onclick="quickRecharge(2500)">
+                                2,500 {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100" onclick="quickRecharge(5000)">
+                                5,000 {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100" onclick="quickRecharge(10000)">
+                                10,000 {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-credit-card me-2"></i>Modes de paiement
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="payment-method mb-2">
+                        <i class="fas fa-money-bill-wave text-success me-2"></i>
+                        <span>Espèces</span>
+                    </div>
+                    <div class="payment-method mb-2">
+                        <i class="fas fa-mobile-alt text-warning me-2"></i>
+                        <span>Orange Money</span>
+                    </div>
+                    <div class="payment-method mb-2">
+                        <i class="fas fa-mobile-alt text-primary me-2"></i>
+                        <span>MTN Money</span>
+                    </div>
+                    <div class="payment-method">
+                        <i class="fas fa-university text-info me-2"></i>
+                        <span>Virement bancaire</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recharge Form & History -->
+        <div class="col-lg-8">
+            <!-- Recharge Form -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Recharger mon compte
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="rechargeForm">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.amount.id_for_label }}" class="form-label">
+                                        <i class="fas fa-coins me-1"></i>Montant à recharger *
+                                    </label>
+                                    {{ form.amount|add_class:"form-control form-control-lg" }}
+                                    {% if form.amount.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.amount.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-text">
+                                        Min: {{ CASHPRINT_SETTINGS.MIN_CREDIT_RECHARGE|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }} - 
+                                        Max: {{ CASHPRINT_SETTINGS.MAX_CREDIT_RECHARGE|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.payment_method.id_for_label }}" class="form-label">
+                                        <i class="fas fa-credit-card me-1"></i>Mode de paiement *
+                                    </label>
+                                    {{ form.payment_method|add_class:"form-select form-select-lg" }}
+                                    {% if form.payment_method.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.payment_method.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3" id="phoneNumberField" style="display: none;">
+                            <label for="{{ form.phone_number.id_for_label }}" class="form-label">
+                                <i class="fas fa-phone me-1"></i>Numéro de téléphone
+                            </label>
+                            {{ form.phone_number|add_class:"form-control" }}
+                            {% if form.phone_number.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.phone_number.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Requis pour Orange Money et MTN Money</div>
+                        </div>
+
+                        <!-- Bonus Info -->
+                        <div class="alert alert-info">
+                            <i class="fas fa-gift me-2"></i>
+                            <strong>Bonus de fidélité :</strong> Recevez 5% de bonus sur chaque recharge !
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary-custom btn-lg">
+                                <i class="fas fa-plus me-2"></i>Recharger mon compte
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history me-2"></i>Historique des transactions
+                    </h5>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="exportHistory()">
+                        <i class="fas fa-download me-1"></i>Exporter
+                    </button>
+                </div>
+                <div class="card-body">
+                    {% if transactions %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Montant</th>
+                                        <th>Solde</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for transaction in transactions %}
+                                    <tr>
+                                        <td>
+                                            <small>{{ transaction.created_at|date:"d/m/Y" }}</small>
+                                            <br><small class="text-muted">{{ transaction.created_at|time:"H:i" }}</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-{{ transaction.transaction_type|badge_color }}">
+                                                {% if transaction.transaction_type == 'credit' %}
+                                                    <i class="fas fa-plus me-1"></i>Recharge
+                                                {% elif transaction.transaction_type == 'debit' %}
+                                                    <i class="fas fa-minus me-1"></i>Paiement
+                                                {% elif transaction.transaction_type == 'refund' %}
+                                                    <i class="fas fa-undo me-1"></i>Remboursement
+                                                {% else %}
+                                                    <i class="fas fa-gift me-1"></i>Bonus
+                                                {% endif %}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {{ transaction.description }}
+                                            <br><small class="text-muted">{{ transaction.get_payment_method_display }}</small>
+                                        </td>
+                                        <td>
+                                            <span class="{% if transaction.transaction_type == 'credit' or transaction.transaction_type == 'refund' %}text-success{% else %}text-danger{% endif %}">
+                                                {% if transaction.transaction_type == 'credit' or transaction.transaction_type == 'refund' %}+{% else %}-{% endif %}
+                                                {{ transaction.amount|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+                                            </span>
+                                        </td>
+                                        <td>{{ transaction.balance_after|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-receipt fa-3x text-muted mb-3"></i>
+                            <h6>Aucune transaction</h6>
+                            <p class="text-muted">Votre historique de transactions apparaîtra ici</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.balance-card {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+}
+
+.balance-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+}
+
+.balance-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+    .balance-amount {
+        font-size: 2rem;
+    }
+}
+</style>
+
+<script>
+function quickRecharge(amount) {
+    document.getElementById('id_amount').value = amount;
+    updateBonusInfo(amount);
+}
+
+function updateBonusInfo(amount) {
+    const bonus = Math.round(amount * 0.05);
+    const total = amount + bonus;
+    
+    // Mettre à jour l'info bonus
+    document.querySelector('.alert-info').innerHTML = `
+        <i class="fas fa-gift me-2"></i>
+        <strong>Bonus de fidélité :</strong> Recevez ${bonus.toLocaleString()} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }} de bonus ! 
+        Total crédité : ${total.toLocaleString()} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}
+    `;
+}
+
+// Afficher/masquer le champ téléphone selon le mode de paiement
+document.getElementById('id_payment_method').addEventListener('change', function() {
+    const phoneField = document.getElementById('phoneNumberField');
+    if (this.value === 'orange_money' || this.value === 'mtn_money') {
+        phoneField.style.display = 'block';
+        document.getElementById('id_phone_number').required = true;
+    } else {
+        phoneField.style.display = 'none';
+        document.getElementById('id_phone_number').required = false;
+    }
+});
+
+// Mettre à jour l'info bonus quand le montant change
+document.getElementById('id_amount').addEventListener('input', function() {
+    const amount = parseFloat(this.value) || 0;
+    if (amount > 0) {
+        updateBonusInfo(amount);
+    }
+});
+
+function exportHistory() {
+    alert('Fonctionnalité d\'export à implémenter');
+}
+
+// Validation du formulaire
+document.getElementById('rechargeForm').addEventListener('submit', function(e) {
+    const amount = parseFloat(document.getElementById('id_amount').value);
+    const paymentMethod = document.getElementById('id_payment_method').value;
+    
+    if (!amount || amount < {{ CASHPRINT_SETTINGS.MIN_CREDIT_RECHARGE }} || amount > {{ CASHPRINT_SETTINGS.MAX_CREDIT_RECHARGE }}) {
+        e.preventDefault();
+        alert('Veuillez saisir un montant valide entre {{ CASHPRINT_SETTINGS.MIN_CREDIT_RECHARGE|currency }} et {{ CASHPRINT_SETTINGS.MAX_CREDIT_RECHARGE|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}');
+        return;
+    }
+    
+    if (!paymentMethod) {
+        e.preventDefault();
+        alert('Veuillez choisir un mode de paiement');
+        return;
+    }
+    
+    const phoneRequired = ['orange_money', 'mtn_money'].includes(paymentMethod);
+    const phoneValue = document.getElementById('id_phone_number').value;
+    
+    if (phoneRequired && !phoneValue) {
+        e.preventDefault();
+        alert('Veuillez saisir votre numéro de téléphone');
+        return;
+    }
+});
+</script>
+{% endblock %}

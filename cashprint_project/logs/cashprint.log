@@ -1,0 +1,747 @@
+INFO 2025-06-23 08:21:53,028 autoreload 13679 129409304764544 Watching for file changes with StatReloader
+ERROR 2025-06-23 08:21:56,911 log 13679 129409254459072 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 23, in home
+    return render(request, 'home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: home.html
+ERROR 2025-06-23 08:21:56,915 basehttp 13679 129409254459072 "GET / HTTP/1.1" 500 90672
+WARNING 2025-06-23 08:21:57,220 log 13679 129409254459072 Not Found: /favicon.ico
+WARNING 2025-06-23 08:21:57,221 basehttp 13679 129409254459072 "GET /favicon.ico HTTP/1.1" 404 7277
+ERROR 2025-06-23 08:26:16,735 log 13679 129409254459072 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 23, in home
+    return render(request, 'home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-06-23 08:26:16,737 basehttp 13679 129409254459072 "GET / HTTP/1.1" 500 208111
+INFO 2025-06-23 08:28:28,295 autoreload 13679 129409304764544 /home/davy/cash/cashprint_project/templates/cashprint_filter.py changed, reloading.
+INFO 2025-06-23 08:28:28,703 autoreload 14203 132358500733056 Watching for file changes with StatReloader
+INFO 2025-06-23 08:33:06,515 autoreload 14535 129598245589120 Watching for file changes with StatReloader
+ERROR 2025-06-23 08:34:15,223 log 14535 129598195324608 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 23, in home
+    return render(request, 'home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 169, in render
+    with context.bind_template(self):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/context.py", line 256, in bind_template
+    processors = template.engine.template_context_processors + self._processors
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 118, in template_context_processors
+    return tuple(import_string(path) for path in context_processors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 118, in <genexpr>
+    return tuple(import_string(path) for path in context_processors)
+                 ^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/utils/module_loading.py", line 30, in import_string
+    return cached_import(module_path, class_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/utils/module_loading.py", line 15, in cached_import
+    module = import_module(module_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'core.context_processors'
+ERROR 2025-06-23 08:34:15,242 basehttp 14535 129598195324608 "GET / HTTP/1.1" 500 136289
+ERROR 2025-06-23 08:34:58,889 log 14535 129598195324608 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 23, in home
+    return render(request, 'home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 134, in render
+    compiled_parent = self.get_parent(context)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 131, in get_parent
+    return self.find_template(parent, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 109, in find_template
+    template, origin = context.template.engine.find_template(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ' == 'success' and '5, 150, 105' or message.tags == 'error' and '220, 38, 38' or '37, 99, 235'' from 'message.tags == 'success' and '5, 150, 105' or message.tags == 'error' and '220, 38, 38' or '37, 99, 235''
+ERROR 2025-06-23 08:34:58,898 basehttp 14535 129598195324608 "GET / HTTP/1.1" 500 236011
+INFO 2025-06-23 08:36:57,168 autoreload 14535 129598245589120 /home/davy/cash/cashprint_project/core/templatetags/cashprint_filters.py changed, reloading.
+INFO 2025-06-23 08:36:57,527 autoreload 14811 127437446176896 Watching for file changes with StatReloader
+INFO 2025-06-23 08:38:03,153 basehttp 14811 127437396833984 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 08:38:20,195 basehttp 14811 127437396833984 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 08:38:22,193 basehttp 14811 127437396833984 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 08:38:24,192 basehttp 14811 127437396833984 "GET /login/ HTTP/1.1" 200 6722
+INFO 2025-06-23 08:39:03,445 basehttp 14811 127437396833984 "GET /register/ HTTP/1.1" 200 15104
+INFO 2025-06-23 08:39:38,012 basehttp 14811 127437396833984 "GET /login/ HTTP/1.1" 200 12862
+INFO 2025-06-23 08:40:08,798 basehttp 14811 127437396833984 "GET /register/ HTTP/1.1" 200 23202
+INFO 2025-06-23 08:41:00,360 basehttp 14811 127437396833984 "GET /login/ HTTP/1.1" 200 12862
+INFO 2025-06-23 08:41:10,600 basehttp 14811 127437396833984 "POST /login/ HTTP/1.1" 302 0
+ERROR 2025-06-23 08:41:10,852 log 14811 127437396833984 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 48, in dashboard
+    return render(request, 'dashboard/dashboard.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'div'
+ERROR 2025-06-23 08:41:10,866 basehttp 14811 127437396833984 "GET /dashboard/ HTTP/1.1" 500 278025
+INFO 2025-06-23 08:41:32,289 basehttp 14811 127437396833984 "GET /dashboard/ HTTP/1.1" 200 16702
+INFO 2025-06-23 08:46:29,603 basehttp 14811 127437396833984 "GET /dashboard/ HTTP/1.1" 200 46364
+ERROR 2025-06-23 08:46:44,031 log 14811 127437396833984 Internal Server Error: /orders/new/
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 170, in new_order
+    return render(request, 'orders/new_order.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: orders/new_order.html
+ERROR 2025-06-23 08:46:44,032 basehttp 14811 127437396833984 "GET /orders/new/ HTTP/1.1" 500 97349
+INFO 2025-06-23 08:52:52,816 autoreload 16317 131305896472704 Watching for file changes with StatReloader
+INFO 2025-06-23 08:52:56,781 basehttp 16317 131305846200000 "GET /orders/new/ HTTP/1.1" 200 31269
+INFO 2025-06-23 08:56:20,525 basehttp 16317 131305846200000 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 08:56:23,634 basehttp 16317 131305846200000 "GET /orders/new/ HTTP/1.1" 200 31269
+INFO 2025-06-23 08:56:25,859 basehttp 16317 131305846200000 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 14:22:54,358 autoreload 7477 127971044343936 Watching for file changes with StatReloader
+INFO 2025-06-23 14:23:05,462 basehttp 7477 127970994063040 "GET /orders/ HTTP/1.1" 200 14138
+WARNING 2025-06-23 14:23:05,628 log 7477 127970994063040 Not Found: /favicon.ico
+WARNING 2025-06-23 14:23:05,630 basehttp 7477 127970994063040 "GET /favicon.ico HTTP/1.1" 404 7277
+INFO 2025-06-23 14:23:09,107 basehttp 7477 127970994063040 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 14:23:09,208 basehttp 7477 127970994063040 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 14:23:20,884 basehttp 7477 127970994063040 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 14:23:24,638 basehttp 7477 127970994063040 "GET /orders/new/ HTTP/1.1" 200 31269
+ERROR 2025-06-23 14:25:07,669 log 7477 127970994063040 Internal Server Error: /credits/
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 283, in credits_management
+    return render(request, 'credits/management.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: credits/management.html
+ERROR 2025-06-23 14:25:07,674 basehttp 7477 127970994063040 "GET /credits/ HTTP/1.1" 500 98278
+INFO 2025-06-23 14:27:10,856 basehttp 7477 127970994063040 "GET /credits/ HTTP/1.1" 200 21648
+INFO 2025-06-23 14:28:09,264 basehttp 7477 127970994063040 "POST /credits/ HTTP/1.1" 302 0
+INFO 2025-06-23 14:28:09,305 basehttp 7477 127970994063040 "GET /credits/ HTTP/1.1" 200 23756
+INFO 2025-06-23 14:28:36,667 basehttp 7477 127970994063040 "GET /profile/ HTTP/1.1" 200 27446
+INFO 2025-06-23 14:29:08,888 basehttp 7477 127970994063040 "POST /profile/ HTTP/1.1" 302 0
+INFO 2025-06-23 14:29:08,953 basehttp 7477 127970994063040 "GET /profile/ HTTP/1.1" 200 27962
+INFO 2025-06-23 14:29:59,387 basehttp 7477 127970994063040 "POST /profile/ HTTP/1.1" 302 0
+INFO 2025-06-23 14:29:59,451 basehttp 7477 127970994063040 "GET /profile/ HTTP/1.1" 200 27934
+INFO 2025-06-23 14:30:17,954 basehttp 7477 127970994063040 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 14:30:21,297 basehttp 7477 127970994063040 "GET /profile/ HTTP/1.1" 200 27470
+INFO 2025-06-23 14:30:23,417 basehttp 7477 127970994063040 "GET /credits/ HTTP/1.1" 200 23294
+INFO 2025-06-23 14:30:30,984 basehttp 7477 127970994063040 "GET /orders/new/ HTTP/1.1" 200 31279
+ERROR 2025-06-23 15:41:40,405 log 7477 127970994063040 Internal Server Error: /admin-dashboard/
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 110, in admin_dashboard
+    return render(request, 'admin/dashboard.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: admin/dashboard.html
+ERROR 2025-06-23 15:41:40,409 basehttp 7477 127970994063040 "GET /admin-dashboard/ HTTP/1.1" 500 100444
+INFO 2025-06-23 15:46:12,924 basehttp 7477 127970994063040 "GET /admin-dashboard/ HTTP/1.1" 200 56120
+INFO 2025-06-23 18:12:40,311 autoreload 23504 131265485615232 Watching for file changes with StatReloader
+INFO 2025-06-23 18:12:44,872 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:12:44,921 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+WARNING 2025-06-23 18:12:46,198 log 23504 131265435305664 Not Found: /favicon.ico
+WARNING 2025-06-23 18:12:46,199 basehttp 23504 131265435305664 "GET /favicon.ico HTTP/1.1" 404 7277
+WARNING 2025-06-23 18:12:56,760 log 23504 131265435305664 Method Not Allowed (GET): /logout/
+WARNING 2025-06-23 18:12:56,790 basehttp 23504 131265435305664 "GET /logout/ HTTP/1.1" 405 0
+WARNING 2025-06-23 18:12:59,775 log 23504 131265435305664 Method Not Allowed (GET): /logout/
+WARNING 2025-06-23 18:12:59,798 basehttp 23504 131265435305664 "GET /logout/ HTTP/1.1" 405 0
+INFO 2025-06-23 18:13:04,599 basehttp 23504 131265435305664 "GET /login/ HTTP/1.1" 302 0
+INFO 2025-06-23 18:13:04,661 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:13:18,802 basehttp 23504 131265435305664 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:13:23,666 basehttp 23504 131265435305664 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:13:40,188 basehttp 23504 131265435305664 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:13:41,990 basehttp 23504 131265435305664 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:13:46,872 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:13:46,925 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:14:02,295 basehttp 23504 131265435305664 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:14:08,812 basehttp 23504 131265435305664 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:14:17,323 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:14:17,379 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:14:25,608 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:14:25,668 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:14:26,539 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:14:26,600 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:14:28,575 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:14:28,633 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+WARNING 2025-06-23 18:14:34,019 log 23504 131265435305664 Method Not Allowed (GET): /logout/
+WARNING 2025-06-23 18:14:34,044 basehttp 23504 131265435305664 "GET /logout/ HTTP/1.1" 405 0
+INFO 2025-06-23 18:14:41,162 basehttp 23504 131265435305664 "GET /admin-dashboard/ HTTP/1.1" 200 56120
+INFO 2025-06-23 18:15:47,578 basehttp 23504 131265435305664 "GET /profile/ HTTP/1.1" 200 27470
+INFO 2025-06-23 18:15:54,616 basehttp 23504 131265435305664 "GET /credits/ HTTP/1.1" 200 23294
+INFO 2025-06-23 18:16:40,860 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:16:40,914 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:17:02,293 basehttp 23504 131265435305664 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:17:04,612 basehttp 23504 131265435305664 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:17:30,127 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:17:39,254 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:17:39,310 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:17:42,257 basehttp 23504 131265435305664 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:17:45,246 basehttp 23504 131265435305664 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:17:54,108 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:17:54,164 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:18:30,799 basehttp 23504 131265435305664 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:18:30,858 basehttp 23504 131265435305664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:18:51,436 basehttp 23504 131265417471680 "GET / HTTP/1.1" 200 28320
+WARNING 2025-06-23 18:18:53,233 log 23504 131265417471680 Not Found: /favicon.ico
+INFO 2025-06-23 18:19:35,159 basehttp 23504 131265417471680 "GET /register/ HTTP/1.1" 200 23202
+INFO 2025-06-23 18:20:01,073 basehttp 23504 131265417471680 "GET /login/ HTTP/1.1" 200 12862
+INFO 2025-06-23 18:21:02,802 basehttp 23504 131265417471680 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-06-23 18:21:02,827 basehttp 23504 131265417471680 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:21:22,664 basehttp 23504 131265417471680 "GET /admin-dashboard/ HTTP/1.1" 200 56120
+INFO 2025-06-23 18:22:04,049 basehttp 23504 131265417471680 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:22:10,358 basehttp 23504 131265417471680 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:22:19,937 basehttp 23504 131265417471680 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:22:48,251 basehttp 23504 131265417471680 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:22:51,046 basehttp 23504 131265417471680 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:22:59,063 basehttp 23504 131265417471680 "GET /orders/new/ HTTP/1.1" 200 31279
+INFO 2025-06-23 18:50:05,254 autoreload 26265 125202454065280 Watching for file changes with StatReloader
+INFO 2025-06-23 18:50:08,906 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 32480
+ERROR 2025-06-23 18:54:07,641 log 26265 125202404849344 Internal Server Error: /orders/new/
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 170, in new_order
+    return render(request, 'orders/new_order.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 523, in parse
+    self.unclosed_block_tag(parse_until)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 590, in unclosed_block_tag
+    raise self.error(token, msg)
+django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 309: 'block'. Looking for one of: endblock.
+ERROR 2025-06-23 18:54:07,651 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 500 197694
+INFO 2025-06-23 18:54:18,429 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 36907
+INFO 2025-06-23 18:54:37,176 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 36907
+INFO 2025-06-23 18:55:04,515 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 36907
+INFO 2025-06-23 18:55:06,346 basehttp 26265 125202404849344 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:55:08,911 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 36907
+INFO 2025-06-23 18:55:10,482 basehttp 26265 125202404849344 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:55:14,571 basehttp 26265 125202404849344 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:55:17,333 basehttp 26265 125202404849344 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:55:18,509 basehttp 26265 125202404849344 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:55:18,567 basehttp 26265 125202404849344 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:55:24,921 basehttp 26265 125202404849344 "GET /credits/ HTTP/1.1" 200 23294
+INFO 2025-06-23 18:55:27,648 basehttp 26265 125202404849344 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:55:28,871 basehttp 26265 125202404849344 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 18:55:28,924 basehttp 26265 125202404849344 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 18:55:30,392 basehttp 26265 125202404849344 "GET /orders/ HTTP/1.1" 200 14138
+INFO 2025-06-23 18:55:32,025 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 36907
+INFO 2025-06-23 21:04:13,539 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 43024
+INFO 2025-06-23 21:08:24,053 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 42808
+INFO 2025-06-23 21:08:26,819 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 42808
+INFO 2025-06-23 21:08:27,824 basehttp 26265 125202404849344 "GET /orders/new/ HTTP/1.1" 200 42808
+INFO 2025-06-23 21:10:15,158 basehttp 26265 125202404849344 "GET / HTTP/1.1" 302 0
+INFO 2025-06-23 21:10:15,234 basehttp 26265 125202404849344 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 21:13:19,534 autoreload 26265 125202454065280 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:13:20,135 autoreload 28189 131200819499136 Watching for file changes with StatReloader
+INFO 2025-06-23 21:14:46,775 autoreload 28189 131200819499136 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:14:47,450 autoreload 28244 131412013191296 Watching for file changes with StatReloader
+INFO 2025-06-23 21:14:56,380 autoreload 28244 131412013191296 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:14:57,171 autoreload 28290 131073855017088 Watching for file changes with StatReloader
+INFO 2025-06-23 21:14:58,829 autoreload 28290 131073855017088 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:14:59,406 autoreload 28310 128606747644032 Watching for file changes with StatReloader
+INFO 2025-06-23 21:16:55,822 basehttp 28310 128606697371328 "GET /dashboard/ HTTP/1.1" 200 46364
+WARNING 2025-06-23 21:17:05,378 log 28310 128606697371328 Method Not Allowed (GET): /logout/
+WARNING 2025-06-23 21:17:05,401 basehttp 28310 128606697371328 "GET /logout/ HTTP/1.1" 405 0
+INFO 2025-06-23 21:18:38,997 autoreload 28310 128606747644032 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:18:39,467 autoreload 28534 134516912402560 Watching for file changes with StatReloader
+INFO 2025-06-23 21:19:15,350 basehttp 28534 134516863170240 "GET /dashboard/ HTTP/1.1" 200 46364
+WARNING 2025-06-23 21:19:21,707 log 28534 134516863170240 Method Not Allowed (GET): /logout/
+WARNING 2025-06-23 21:19:21,732 basehttp 28534 134516863170240 "GET /logout/ HTTP/1.1" 405 0
+INFO 2025-06-23 21:21:01,412 autoreload 28534 134516912402560 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:21:01,995 autoreload 28696 127561779269760 Watching for file changes with StatReloader
+INFO 2025-06-23 21:21:08,311 autoreload 28696 127561779269760 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:21:08,948 autoreload 28730 129177811558528 Watching for file changes with StatReloader
+INFO 2025-06-23 21:21:12,173 autoreload 28730 129177811558528 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:21:12,851 autoreload 28741 127482484670592 Watching for file changes with StatReloader
+INFO 2025-06-23 21:21:15,042 autoreload 28741 127482484670592 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:21:15,618 autoreload 28759 130802573787264 Watching for file changes with StatReloader
+INFO 2025-06-23 21:22:22,569 autoreload 28759 130802573787264 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:22:23,058 autoreload 28843 136395982344320 Watching for file changes with StatReloader
+INFO 2025-06-23 21:22:36,648 basehttp 28843 136395932047040 "GET /logout/ HTTP/1.1" 200 2838
+INFO 2025-06-23 21:22:36,701 basehttp 28843 136395906868928 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-06-23 21:22:36,701 basehttp 28843 136395932047040 "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-06-23 21:22:36,702 basehttp 28843 136395923654336 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-06-23 21:22:36,702 basehttp 28843 136395915261632 "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-06-23 21:22:44,327 basehttp 28843 136395932047040 "GET /logout/ HTTP/1.1" 200 2838
+INFO 2025-06-23 21:30:36,960 autoreload 28843 136395982344320 /home/davy/cash/cashprint_project/core/urls.py changed, reloading.
+INFO 2025-06-23 21:30:37,740 autoreload 29074 137227622916224 Watching for file changes with StatReloader
+INFO 2025-06-23 21:30:49,749 autoreload 29074 137227622916224 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:30:50,390 autoreload 29112 129890919927936 Watching for file changes with StatReloader
+ERROR 2025-06-23 21:30:59,852 log 29112 129890869663424 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/cashprint_project/core/views.py", line 48, in dashboard
+    return render(request, 'dashboard/dashboard.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+ERROR 2025-06-23 21:30:59,856 basehttp 29112 129890869663424 "GET /dashboard/ HTTP/1.1" 500 159711
+INFO 2025-06-23 21:31:25,561 autoreload 29112 129890919927936 /home/davy/cash/cashprint_project/core/urls.py changed, reloading.
+INFO 2025-06-23 21:31:26,241 autoreload 29193 129004441276544 Watching for file changes with StatReloader
+INFO 2025-06-23 21:31:35,107 autoreload 29193 129004441276544 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:31:35,869 autoreload 29230 127325548507264 Watching for file changes with StatReloader
+INFO 2025-06-23 21:31:39,402 autoreload 29230 127325548507264 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:31:40,151 autoreload 29251 140476752769152 Watching for file changes with StatReloader
+INFO 2025-06-23 21:32:40,845 autoreload 29251 140476752769152 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:32:41,425 autoreload 29281 123889596637312 Watching for file changes with StatReloader
+INFO 2025-06-23 21:32:43,575 autoreload 29281 123889596637312 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:32:44,045 autoreload 29307 137833689190528 Watching for file changes with StatReloader
+INFO 2025-06-23 21:32:45,178 autoreload 29307 137833689190528 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:32:45,672 autoreload 29313 131323292213376 Watching for file changes with StatReloader
+INFO 2025-06-23 21:33:01,804 autoreload 29313 131323292213376 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:33:02,422 autoreload 29355 127389455110272 Watching for file changes with StatReloader
+INFO 2025-06-23 21:33:05,720 autoreload 29355 127389455110272 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:33:06,437 autoreload 29375 132953237794944 Watching for file changes with StatReloader
+INFO 2025-06-23 21:34:07,719 autoreload 29375 132953237794944 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:34:08,406 autoreload 29411 140451710718080 Watching for file changes with StatReloader
+INFO 2025-06-23 21:34:27,592 autoreload 29492 123624663924864 Watching for file changes with StatReloader
+INFO 2025-06-23 21:34:38,048 autoreload 29492 123624663924864 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:34:38,775 autoreload 29529 125016834056320 Watching for file changes with StatReloader
+INFO 2025-06-23 21:34:40,952 autoreload 29529 125016834056320 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:34:41,587 autoreload 29550 132386844160128 Watching for file changes with StatReloader
+INFO 2025-06-23 21:34:43,927 autoreload 29550 132386844160128 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:34:44,608 autoreload 29556 131003835007104 Watching for file changes with StatReloader
+INFO 2025-06-23 21:34:47,822 autoreload 29556 131003835007104 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:34:48,525 autoreload 29569 133579438477440 Watching for file changes with StatReloader
+INFO 2025-06-23 21:34:57,019 autoreload 29569 133579438477440 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:34:57,727 autoreload 29617 123961962680448 Watching for file changes with StatReloader
+INFO 2025-06-23 21:35:24,910 autoreload 29617 123961962680448 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:35:25,601 autoreload 29644 133776515756160 Watching for file changes with StatReloader
+INFO 2025-06-23 21:35:27,975 autoreload 29644 133776515756160 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:35:28,697 autoreload 29664 134935275729024 Watching for file changes with StatReloader
+INFO 2025-06-23 21:35:36,540 autoreload 29664 134935275729024 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:35:37,220 autoreload 29688 123997447942272 Watching for file changes with StatReloader
+INFO 2025-06-23 21:35:41,299 basehttp 29688 123997397673664 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 21:35:47,297 basehttp 29688 123997397673664 "GET /logout/ HTTP/1.1" 200 2838
+INFO 2025-06-23 21:35:53,324 basehttp 29688 123997397673664 "GET /admin/ HTTP/1.1" 200 11042
+INFO 2025-06-23 21:35:53,434 basehttp 29688 123997308053184 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-06-23 21:35:53,435 basehttp 29688 123997316445888 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-06-23 21:35:53,435 basehttp 29688 123997397673664 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-06-23 21:35:53,464 basehttp 29688 123997397673664 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-06-23 21:35:53,467 basehttp 29688 123997308053184 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-06-23 21:35:57,610 basehttp 29688 123997308053184 "GET /logout/ HTTP/1.1" 200 2838
+INFO 2025-06-23 21:36:59,340 autoreload 29688 123997447942272 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:36:59,935 autoreload 29814 130989418057856 Watching for file changes with StatReloader
+INFO 2025-06-23 21:37:09,814 basehttp 29814 130989367809728 "GET /dashboard/ HTTP/1.1" 200 46364
+INFO 2025-06-23 21:37:14,035 basehttp 29814 130989367809728 "GET /logout/ HTTP/1.1" 200 2838
+INFO 2025-06-23 21:37:18,541 basehttp 29814 130989367809728 "GET /logout/ HTTP/1.1" 200 2838
+INFO 2025-06-23 21:44:09,007 autoreload 29814 130989418057856 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:44:09,756 autoreload 30204 135923023515776 Watching for file changes with StatReloader
+INFO 2025-06-23 21:44:12,981 autoreload 30204 135923023515776 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:44:13,509 autoreload 30226 124025234411648 Watching for file changes with StatReloader
+INFO 2025-06-23 21:44:16,741 autoreload 30226 124025234411648 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:44:17,271 autoreload 30246 137187550134400 Watching for file changes with StatReloader
+INFO 2025-06-23 21:44:21,525 autoreload 30246 137187550134400 /home/davy/cash/cashprint_project/core/auth_views.py changed, reloading.
+INFO 2025-06-23 21:44:22,039 autoreload 30267 137165332402304 Watching for file changes with StatReloader
+INFO 2025-06-23 21:47:53,162 autoreload 30267 137165332402304 /home/davy/cash/cashprint_project/cashprint_project/urls.py changed, reloading.
+INFO 2025-06-23 21:47:53,847 autoreload 30324 131689410650240 Watching for file changes with StatReloader
+INFO 2025-06-23 21:47:59,173 basehttp 30324 131689361405632 "GET /dashboard/ HTTP/1.1" 200 46960
+INFO 2025-06-23 21:48:04,366 basehttp 30324 131689361405632 "POST /logout/ HTTP/1.1" 302 0
+INFO 2025-06-23 21:48:04,383 basehttp 30324 131689361405632 "GET /login/ HTTP/1.1" 200 12862
+INFO 2025-06-23 21:48:12,318 basehttp 30324 131689361405632 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 21:49:56,857 basehttp 30324 131689361405632 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 21:50:05,279 basehttp 30324 131689361405632 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 21:52:18,132 autoreload 30324 131689410650240 /home/davy/cash/cashprint_project/cashprint_project/settings.py changed, reloading.
+INFO 2025-06-23 21:52:18,831 autoreload 30504 129598660014208 Watching for file changes with StatReloader
+INFO 2025-06-23 21:52:23,458 autoreload 30504 129598660014208 /home/davy/cash/cashprint_project/cashprint_project/settings.py changed, reloading.
+INFO 2025-06-23 21:52:24,205 autoreload 30522 129063486931072 Watching for file changes with StatReloader
+INFO 2025-06-23 21:52:27,186 basehttp 30522 129063364589248 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 21:52:44,567 autoreload 30522 129063486931072 /home/davy/cash/cashprint_project/cashprint_project/settings.py changed, reloading.
+INFO 2025-06-23 21:52:45,005 autoreload 30560 131570883502208 Watching for file changes with StatReloader
+INFO 2025-06-23 21:52:49,673 autoreload 30560 131570883502208 /home/davy/cash/cashprint_project/cashprint_project/settings.py changed, reloading.
+INFO 2025-06-23 21:52:50,382 autoreload 30581 124953323888768 Watching for file changes with StatReloader
+INFO 2025-06-23 21:52:52,752 autoreload 30581 124953323888768 /home/davy/cash/cashprint_project/cashprint_project/settings.py changed, reloading.
+INFO 2025-06-23 21:52:53,460 autoreload 30598 124189421387904 Watching for file changes with StatReloader
+INFO 2025-06-23 21:52:54,774 basehttp 30598 124189372171968 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-23 21:52:58,113 basehttp 30598 124189372171968 "GET / HTTP/1.1" 200 28320

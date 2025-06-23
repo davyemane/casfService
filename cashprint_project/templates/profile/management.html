@@ -1,0 +1,451 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load cashprint_filters %}
+
+{% block title %}Mon profil - {{ CASHPRINT_SETTINGS.COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Mon profil</li>
+                </ol>
+            </nav>
+            <h1 class="h2 mb-2">Gestion du profil</h1>
+            <p class="text-muted">Gérez vos informations personnelles et préférences</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Profile Overview -->
+        <div class="col-lg-4">
+            <div class="card profile-card text-center mb-4">
+                <div class="card-body p-4">
+                    <div class="profile-avatar mb-3">
+                        {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+                    </div>
+                    <h4>{{ user.get_full_name|default:user.username }}</h4>
+                    <p class="text-muted">{{ user.profile.get_user_type_display }}</p>
+                    
+                    {% if user.profile.is_verified_student %}
+                    <span class="badge bg-success mb-2">
+                        <i class="fas fa-graduation-cap me-1"></i>Étudiant vérifié
+                    </span>
+                    {% endif %}
+                    
+                    <div class="profile-stats mt-3">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="stat-value">{{ user.orders.count }}</div>
+                                <div class="stat-label">Commandes</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-value">{{ user.profile.credits_balance|currency }}</div>
+                                <div class="stat-label">Crédits</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-value">
+                                    {% if user.profile.is_verified_student %}-{% student_discount_percentage %}%{% else %}0%{% endif %}
+                                </div>
+                                <div class="stat-label">Remise</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Status -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-shield-alt me-2"></i>Statut du compte
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="status-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Email vérifié</span>
+                            <i class="fas fa-check-circle text-success"></i>
+                        </div>
+                    </div>
+                    <div class="status-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Profil complété</span>
+                            <div class="progress" style="width: 100px; height: 6px;">
+                                {% with completion=user.profile.phone|yesno:"25,0" %}
+                                {% with completion=completion|add:user.profile.institution|yesno:"25,0" %}
+                                {% with completion=completion|add:user.profile.address|yesno:"25,0" %}
+                                {% with completion=completion|add:"50" %}
+                                <div class="progress-bar bg-success" style="width: {{ completion }}%"></div>
+                                {% endwith %}
+                                {% endwith %}
+                                {% endwith %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Statut étudiant</span>
+                            {% if user.profile.is_verified_student %}
+                                <i class="fas fa-check-circle text-success"></i>
+                            {% else %}
+                                <i class="fas fa-times-circle text-muted"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>Actions rapides
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'credits_management' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-coins me-2"></i>Recharger crédits
+                        </a>
+                        <a href="{% url 'my_orders' %}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-history me-2"></i>Mes commandes
+                        </a>
+                        <button class="btn btn-outline-info btn-sm" onclick="downloadProfile()">
+                            <i class="fas fa-download me-2"></i>Exporter données
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Forms -->
+        <div class="col-lg-8">
+            <div class="row">
+                <!-- Personal Information -->
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-user me-2"></i>Informations personnelles
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" id="userForm">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="user">
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="{{ user_form.first_name.id_for_label }}" class="form-label">
+                                                <i class="fas fa-user me-1"></i>Prénom *
+                                            </label>
+                                            {{ user_form.first_name|add_class:"form-control" }}
+                                            {% if user_form.first_name.errors %}
+                                                <div class="text-danger small mt-1">
+                                                    {% for error in user_form.first_name.errors %}{{ error }}{% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="{{ user_form.last_name.id_for_label }}" class="form-label">
+                                                <i class="fas fa-user me-1"></i>Nom *
+                                            </label>
+                                            {{ user_form.last_name|add_class:"form-control" }}
+                                            {% if user_form.last_name.errors %}
+                                                <div class="text-danger small mt-1">
+                                                    {% for error in user_form.last_name.errors %}{{ error }}{% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ user_form.email.id_for_label }}" class="form-label">
+                                        <i class="fas fa-envelope me-1"></i>Email *
+                                    </label>
+                                    {{ user_form.email|add_class:"form-control" }}
+                                    {% if user_form.email.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in user_form.email.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">* Champs obligatoires</small>
+                                    <button type="submit" class="btn btn-primary-custom">
+                                        <i class="fas fa-save me-2"></i>Sauvegarder
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Details -->
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-id-card me-2"></i>Détails du profil
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" id="profileForm">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="profile">
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="{{ profile_form.phone.id_for_label }}" class="form-label">
+                                                <i class="fas fa-phone me-1"></i>Téléphone
+                                            </label>
+                                            {{ profile_form.phone|add_class:"form-control" }}
+                                            {% if profile_form.phone.errors %}
+                                                <div class="text-danger small mt-1">
+                                                    {% for error in profile_form.phone.errors %}{{ error }}{% endfor %}
+                                                </div>
+                                            {% endif %}
+                                            <div class="form-text">Format: +237 6XX XXX XXX</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="{{ profile_form.student_id.id_for_label }}" class="form-label">
+                                                <i class="fas fa-id-badge me-1"></i>Numéro étudiant
+                                            </label>
+                                            {{ profile_form.student_id|add_class:"form-control" }}
+                                            {% if profile_form.student_id.errors %}
+                                                <div class="text-danger small mt-1">
+                                                    {% for error in profile_form.student_id.errors %}{{ error }}{% endfor %}
+                                                </div>
+                                            {% endif %}
+                                            <div class="form-text">Pour les remises étudiants</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ profile_form.institution.id_for_label }}" class="form-label">
+                                        <i class="fas fa-university me-1"></i>Établissement
+                                    </label>
+                                    {{ profile_form.institution|add_class:"form-control" }}
+                                    {% if profile_form.institution.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in profile_form.institution.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ profile_form.address.id_for_label }}" class="form-label">
+                                        <i class="fas fa-map-marker-alt me-1"></i>Adresse
+                                    </label>
+                                    {{ profile_form.address|add_class:"form-control" }}
+                                    {% if profile_form.address.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in profile_form.address.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary-custom">
+                                        <i class="fas fa-save me-2"></i>Sauvegarder
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-lock me-2"></i>Sécurité
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Mot de passe</h6>
+                                    <p class="text-muted">Dernière modification: il y a 30 jours</p>
+                                    <button class="btn btn-outline-warning btn-sm" onclick="changePassword()">
+                                        <i class="fas fa-key me-1"></i>Changer le mot de passe
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Compte</h6>
+                                    <p class="text-muted">Membre depuis {{ user.date_joined|date:"F Y" }}</p>
+                                    <button class="btn btn-outline-danger btn-sm" onclick="deleteAccount()">
+                                        <i class="fas fa-trash me-1"></i>Supprimer le compte
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.profile-card {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.profile-stats .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.profile-stats .stat-label {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.status-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.status-item:last-child {
+    border-bottom: none;
+}
+
+.card {
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .profile-stats .row > div {
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<script>
+function changePassword() {
+    if (confirm('Vous allez être redirigé vers la page de changement de mot de passe.')) {
+        window.location.href = '{% url "password_reset" %}';
+    }
+}
+
+function deleteAccount() {
+    const confirmation = prompt('Pour supprimer votre compte, tapez "SUPPRIMER" (en majuscules):');
+    if (confirmation === 'SUPPRIMER') {
+        if (confirm('Êtes-vous absolument sûr ? Cette action est irréversible.')) {
+            alert('Fonctionnalité de suppression à implémenter');
+        }
+    } else if (confirmation !== null) {
+        alert('Suppression annulée. Mot de confirmation incorrect.');
+    }
+}
+
+function downloadProfile() {
+    if (confirm('Télécharger vos données personnelles au format JSON ?')) {
+        const profileData = {
+            user: {
+                username: '{{ user.username }}',
+                email: '{{ user.email }}',
+                first_name: '{{ user.first_name }}',
+                last_name: '{{ user.last_name }}',
+                date_joined: '{{ user.date_joined|date:"c" }}'
+            },
+            profile: {
+                user_type: '{{ user.profile.user_type }}',
+                phone: '{{ user.profile.phone }}',
+                institution: '{{ user.profile.institution }}',
+                student_id: '{{ user.profile.student_id }}',
+                address: '{{ user.profile.address }}',
+                credits_balance: {{ user.profile.credits_balance }},
+                is_verified_student: {{ user.profile.is_verified_student|yesno:"true,false" }}
+            },
+            statistics: {
+                total_orders: {{ user.orders.count }},
+                export_date: new Date().toISOString()
+            }
+        };
+        
+        const dataStr = JSON.stringify(profileData, null, 2);
+        const dataBlob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'cashprint_profile_{{ user.username }}.json';
+        link.click();
+        URL.revokeObjectURL(url);
+    }
+}
+
+// Validation des formulaires
+document.getElementById('userForm').addEventListener('submit', function(e) {
+    const email = document.getElementById('{{ user_form.email.id_for_label }}').value;
+    if (!email || !email.includes('@')) {
+        e.preventDefault();
+        alert('Veuillez saisir une adresse email valide');
+        return;
+    }
+});
+
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    const phone = document.getElementById('{{ profile_form.phone.id_for_label }}').value;
+    if (phone && !phone.match(/^\+?[0-9\s\-\(\)]+$/)) {
+        e.preventDefault();
+        alert('Format de téléphone invalide');
+        return;
+    }
+});
+
+// Auto-save draft (optionnel)
+const formInputs = document.querySelectorAll('input, textarea, select');
+formInputs.forEach(input => {
+    input.addEventListener('change', function() {
+        localStorage.setItem('profile_draft_' + this.name, this.value);
+    });
+});
+
+// Restore draft on page load
+window.addEventListener('load', function() {
+    formInputs.forEach(input => {
+        const draftValue = localStorage.getItem('profile_draft_' + input.name);
+        if (draftValue && !input.value) {
+            input.value = draftValue;
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+<!-- templates/includes/status_badge.html -->
+<span class="badge bg-{{ badge_class }}">
+    {{ status_display|capfirst }}
+</span>
+
+<!-- templates/includes/price_display.html -->
+<span class="price-display price-{{ size }}">
+    {% if size == "large" %}
+        <span class="h4 mb-0 fw-bold text-primary">{{ formatted_amount }}</span>
+    {% elif size == "small" %}
+        <small class="text-muted">{{ formatted_amount }}</small>
+    {% else %}
+        <span class="fw-bold">{{ formatted_amount }}</span>
+    {% endif %}
+</span>
