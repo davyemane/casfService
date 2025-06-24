@@ -1,38 +1,37 @@
-# Configuration Gunicorn pour Cash Print
+# Configuration Gunicorn pour Cash Print - CHEMIN CORRIGÉ
 import multiprocessing
+import os
 
-# Serveur
-bind = "0.0.0.0:8000"
+# CHEMIN CORRIGÉ vers le projet
+BASE_DIR = '/var/www/cashprint/casfService/cashprint_project'
+
+# Liaison et workers
+bind = "127.0.0.1:8000"
 workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = "sync"
 worker_connections = 1000
 max_requests = 1000
-max_requests_jitter = 100
+max_requests_jitter = 50
 
-# Logs
-accesslog = "logs/access.log"
-errorlog = "logs/error.log"
+# Timeouts
+timeout = 30
+keepalive = 2
+graceful_timeout = 30
+
+# Logging avec le BON chemin
+accesslog = os.path.join(BASE_DIR, 'logs/access.log')
+errorlog = os.path.join(BASE_DIR, 'logs/error.log')
 loglevel = "info"
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
+# Process naming
+proc_name = 'cashprint_gunicorn'
+
 # Process
-daemon = False
-pidfile = "gunicorn.pid"
-user = None
-group = None
-tmp_upload_dir = None
+pidfile = os.path.join(BASE_DIR, 'gunicorn.pid')
+user = "cashprint"
+group = "www-data"
 
-# SSL (si nécessaire)
-# keyfile = "path/to/keyfile"
-# certfile = "path/to/certfile"
-
-# Performance
-keepalive = 2
-timeout = 30
-graceful_timeout = 30
+# Application
+chdir = BASE_DIR
 preload_app = True
-
-# Sécurité
-limit_request_line = 4094
-limit_request_fields = 100
-limit_request_field_size = 8190

@@ -20,6 +20,7 @@ mkdir -p logs
 mkdir -p static
 mkdir -p media
 
+pip install -r requirements.txt --no-cache-dir
 # Migrations Django
 echo -e "${YELLOW}📦 Exécution des migrations...${NC}"
 python manage.py makemigrations
