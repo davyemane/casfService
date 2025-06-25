@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load cashprint_filters %}
+
+{% block title %}Inscription - {{ CASHPRINT_SETTINGS.COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0" style="margin-top: 30px;">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                        <h2 class="fw-bold">Créer un compte</h2>
+                        <p class="text-muted">Rejoignez Cash Print pour commander en ligne</p>
+                    </div>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Prénom *
+                                    </label>
+                                    {{ form.first_name|add_class:"form-control" }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.first_name.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Nom *
+                                    </label>
+                                    {{ form.last_name|add_class:"form-control" }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.last_name.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">
+                                <i class="fas fa-at me-2"></i>Nom d'utilisateur *
+                            </label>
+                            {{ form.username|add_class:"form-control" }}
+                            {% if form.username.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.username.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Lettres, chiffres et @/./+/-/_ uniquement.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="fas fa-envelope me-2"></i>Email *
+                            </label>
+                            {{ form.email|add_class:"form-control" }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.email.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.password1.id_for_label }}" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Mot de passe *
+                                    </label>
+                                    {{ form.password1|add_class:"form-control" }}
+                                    {% if form.password1.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.password1.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.password2.id_for_label }}" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Confirmer le mot de passe *
+                                    </label>
+                                    {{ form.password2|add_class:"form-control" }}
+                                    {% if form.password2.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.password2.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Type d'utilisateur -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-users me-2"></i>Type de compte *
+                            </label>
+                            <div class="row">
+                                {% for value, label in form.user_type.field.choices %}
+                                    <div class="col-6 mb-2">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center p-3">
+                                                <input type="radio" 
+                                                       class="btn-check" 
+                                                       name="user_type" 
+                                                       id="user_type_{{ value }}" 
+                                                       value="{{ value }}"
+                                                       {% if value == 'student' %}checked{% endif %}>
+                                                <label class="btn btn-outline-{% if value == 'student' %}success{% else %}primary{% endif %} w-100" 
+                                                       for="user_type_{{ value }}">
+                                                    <i class="fas fa-{% if value == 'student' %}graduation-cap{% elif value == 'teacher' %}chalkboard-teacher{% elif value == 'company' %}building{% else %}user{% endif %} d-block mb-2"></i>
+                                                    <strong>{{ label }}</strong>
+                                                    {% if value == 'student' %}
+                                                        <br><small>-{% student_discount_percentage %}% de remise</small>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if form.user_type.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.user_type.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Champs optionnels -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">
+                                        <i class="fas fa-phone me-2"></i>Téléphone
+                                    </label>
+                                    {{ form.phone|add_class:"form-control" }}
+                                    {% if form.phone.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.phone.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.student_id.id_for_label }}" class="form-label">
+                                        <i class="fas fa-id-card me-2"></i>N° Étudiant
+                                    </label>
+                                    {{ form.student_id|add_class:"form-control" }}
+                                    {% if form.student_id.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.student_id.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.institution.id_for_label }}" class="form-label">
+                                <i class="fas fa-university me-2"></i>Établissement
+                            </label>
+                            {{ form.institution|add_class:"form-control" }}
+                            {% if form.institution.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.institution.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                            <label class="form-check-label" for="terms">
+                                J'accepte les <a href="#" class="text-decoration-none">conditions d'utilisation</a> et la <a href="#" class="text-decoration-none">politique de confidentialité</a> *
+                            </label>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary-custom btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>Créer mon compte
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <p class="mb-0">Déjà un compte ?</p>
+                        <a href="{% url 'login' %}" class="btn btn-outline-primary mt-2">
+                            <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avantages -->
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card border-0 text-center">
+                        <div class="card-body">
+                            <i class="fas fa-clock fa-2x text-primary mb-2"></i>
+                            <h6>Commande 24h/24</h6>
+                            <small class="text-muted">Commandez quand vous voulez</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 text-center">
+                        <div class="card-body">
+                            <i class="fas fa-mobile-alt fa-2x text-success mb-2"></i>
+                            <h6>Paiement Mobile</h6>
+                            <small class="text-muted">Orange Money, MTN Money</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 text-center">
+                        <div class="card-body">
+                            <i class="fas fa-shipping-fast fa-2x text-warning mb-2"></i>
+                            <h6>Livraison rapide</h6>
+                            <small class="text-muted">En moins de 24h</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

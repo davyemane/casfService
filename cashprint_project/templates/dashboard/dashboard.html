@@ -1,0 +1,1456 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load cashprint_filters %}
+
+{% block title %}Dashboard Admin - {{ CASHPRINT_SETTINGS.COMPANY_NAME }}{% endblock %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --primary-dark: #1d4ed8;
+        --secondary-color: #10b981;
+        --accent-color: #f59e0b;
+        --success-color: #059669;
+        --warning-color: #d97706;
+        --error-color: #dc2626;
+        --info-color: #0ea5e9;
+        --text-dark: #1f2937;
+        --text-medium: #6b7280;
+        --text-light: #9ca3af;
+        --bg-white: #ffffff;
+        --bg-gray-50: #f9fafb;
+        --bg-gray-100: #f3f4f6;
+        --bg-gray-200: #e5e7eb;
+        --border-color: #e5e7eb;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg-gray-50);
+    }
+
+    .admin-header {
+        background: var(--bg-white);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 0;
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        margin-top: -76px;
+        padding-top: 76px;
+    }
+
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(5, 150, 105, 0.1);
+        color: var(--success-color);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--success-color);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .notification-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background: var(--bg-gray-100);
+        color: var(--text-medium);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .notification-btn:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        background: var(--error-color);
+        color: white;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-3px); }
+        60% { transform: translateY(-2px); }
+    }
+
+    .main-layout {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 2rem;
+    }
+
+    .sidebar {
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        padding: 1.5rem;
+        height: fit-content;
+        position: sticky;
+        top: 120px;
+    }
+
+    .sidebar-title {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+        list-style: none;
+        padding: 0;
+    }
+
+    .nav-item {
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-medium);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .nav-link:hover {
+        background: var(--bg-gray-50);
+        color: var(--text-dark);
+    }
+
+    .nav-link.active {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(249, 115, 22, 0.1));
+        color: var(--primary-color);
+        font-weight: 500;
+    }
+
+    .nav-icon {
+        width: 20px;
+        text-align: center;
+    }
+
+    .dashboard-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+
+    .page-subtitle {
+        color: var(--text-medium);
+        margin-top: 0.25rem;
+    }
+
+    .header-actions-right {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-admin {
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .btn-admin-primary {
+        background: linear-gradient(135deg, #2563eb, #f97316);
+        color: white;
+    }
+
+    .btn-admin-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lg);
+        color: white;
+    }
+
+    .btn-admin-outline {
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--border-color);
+    }
+
+    .btn-admin-outline:hover {
+        border-color: var(--primary-color);
+        background: rgba(37, 99, 235, 0.05);
+    }
+
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+        background: var(--bg-white);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: var(--shadow-md);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .kpi-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+
+    .kpi-card.success::before {
+        background: linear-gradient(90deg, var(--success-color), var(--secondary-color));
+    }
+
+    .kpi-card.warning::before {
+        background: linear-gradient(90deg, var(--warning-color), var(--accent-color));
+    }
+
+    .kpi-card.error::before {
+        background: linear-gradient(90deg, var(--error-color), var(--warning-color));
+    }
+
+    .kpi-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .kpi-icon.primary {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+    }
+
+    .kpi-icon.success {
+        background: rgba(5, 150, 105, 0.1);
+        color: var(--success-color);
+    }
+
+    .kpi-icon.warning {
+        background: rgba(217, 119, 6, 0.1);
+        color: var(--warning-color);
+    }
+
+    .kpi-icon.error {
+        background: rgba(220, 38, 38, 0.1);
+        color: var(--error-color);
+    }
+
+    .kpi-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+    }
+
+    .kpi-unit {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-medium);
+    }
+
+    .kpi-label {
+        color: var(--text-medium);
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    .kpi-trend {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .kpi-trend.positive {
+        color: var(--success-color);
+    }
+
+    .kpi-trend.negative {
+        color: var(--error-color);
+    }
+
+    .kpi-trend.neutral {
+        color: var(--text-medium);
+    }
+
+    .alerts-bar {
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .alerts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .alerts-title {
+        font-weight: 600;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .alerts-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .alert-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid;
+        transition: all 0.2s ease;
+    }
+
+    .alert-item:hover {
+        background: var(--bg-gray-50);
+    }
+
+    .alert-item.critical {
+        background: rgba(220, 38, 38, 0.05);
+        border-left-color: var(--error-color);
+    }
+
+    .alert-item.warning {
+        background: rgba(217, 119, 6, 0.05);
+        border-left-color: var(--warning-color);
+    }
+
+    .alert-item.info {
+        background: rgba(14, 165, 233, 0.05);
+        border-left-color: var(--info-color);
+    }
+
+    .alert-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .alert-item.critical .alert-icon {
+        background: rgba(220, 38, 38, 0.1);
+        color: var(--error-color);
+    }
+
+    .alert-item.warning .alert-icon {
+        background: rgba(217, 119, 6, 0.1);
+        color: var(--warning-color);
+    }
+
+    .alert-item.info .alert-icon {
+        background: rgba(14, 165, 233, 0.1);
+        color: var(--info-color);
+    }
+
+    .alert-content {
+        flex: 1;
+    }
+
+    .alert-title {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+    }
+
+    .alert-description {
+        font-size: 0.875rem;
+        color: var(--text-medium);
+    }
+
+    .alert-time {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        white-space: nowrap;
+    }
+
+    .charts-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .chart-card {
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        padding: 2rem;
+    }
+
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .chart-title {
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+
+    .chart-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .chart-btn {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--bg-white);
+        color: var(--text-medium);
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .chart-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    .chart-container {
+        height: 300px;
+        position: relative;
+        background: var(--bg-gray-50);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-medium);
+    }
+
+    .printers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .printer-card {
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .printer-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .printer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .printer-info h3 {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .printer-model {
+        font-size: 0.875rem;
+        color: var(--text-medium);
+    }
+
+    .printer-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .printer-status.online {
+        background: rgba(5, 150, 105, 0.1);
+        color: var(--success-color);
+    }
+
+    .printer-status.busy {
+        background: rgba(217, 119, 6, 0.1);
+        color: var(--warning-color);
+    }
+
+    .printer-status.offline {
+        background: rgba(220, 38, 38, 0.1);
+        color: var(--error-color);
+    }
+
+    .printer-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .printer-stat {
+        text-align: center;
+    }
+
+    .printer-stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+
+    .printer-stat-label {
+        font-size: 0.75rem;
+        color: var(--text-medium);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .printer-progress {
+        margin-bottom: 1rem;
+    }
+
+    .progress-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .progress-bar {
+        height: 8px;
+        background: var(--bg-gray-200);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.3s ease;
+    }
+
+    .progress-fill.success {
+        background: linear-gradient(90deg, var(--success-color), var(--secondary-color));
+    }
+
+    .progress-fill.warning {
+        background: linear-gradient(90deg, var(--warning-color), var(--accent-color));
+    }
+
+    .printer-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .printer-btn {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--bg-white);
+        color: var(--text-medium);
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .printer-btn:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .recent-orders {
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+    }
+
+    .orders-header {
+        padding: 2rem 2rem 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .orders-title {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .orders-subtitle {
+        color: var(--text-medium);
+        font-size: 0.875rem;
+    }
+
+    .orders-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        padding: 1rem 2rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .orders-table th {
+        background: var(--bg-gray-50);
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.875rem;
+    }
+
+    .orders-table td {
+        font-size: 0.875rem;
+    }
+
+    .order-id {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .customer-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .customer-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #f97316);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .status-pending {
+        background: rgba(217, 119, 6, 0.1);
+        color: var(--warning-color);
+    }
+
+    .status-processing {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+    }
+
+    .status-completed {
+        background: rgba(5, 150, 105, 0.1);
+        color: var(--success-color);
+    }
+
+    .auto-refresh {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--bg-white);
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        padding: 0.75rem 1rem;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--text-medium);
+    }
+
+    .refresh-icon {
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .live-update {
+        animation: liveUpdate 3s ease infinite;
+    }
+
+    @keyframes liveUpdate {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+
+    @media (max-width: 1024px) {
+        .main-layout {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .sidebar {
+            position: static;
+            order: -1;
+        }
+
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .kpi-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Admin Header -->
+<div class="admin-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>Système opérationnel</span>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                <button class="notification-btn" onclick="showNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">{{ active_alerts|default:0 }}</span>
+                </button>
+                
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #f97316); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem;">
+                        {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+                    </div>
+                    <span style="font-weight: 500;">{{ user.first_name|default:user.username }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Layout -->
+<div class="main-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-title">Navigation</div>
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="{% url 'admin_dashboard' %}" class="nav-link active">
+                    <i class="fas fa-tachometer-alt nav-icon"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="{% url 'my_orders' %}" class="nav-link">
+                    <i class="fas fa-file-alt nav-icon"></i>
+                    Commandes
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-print nav-icon"></i>
+                    Imprimantes
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    Clients
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-bar nav-icon"></i>
+                    Analytics
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="{% url 'profile_management' %}" class="nav-link">
+                    <i class="fas fa-cog nav-icon"></i>
+                    Paramètres
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Vue d'ensemble de l'activité {{ CASHPRINT_SETTINGS.COMPANY_NAME }}</p>
+            </div>
+            <div class="header-actions-right">
+                <button class="btn-admin btn-admin-outline" onclick="exportReport()">
+                    <i class="fas fa-download"></i>
+                    Exporter rapport
+                </button>
+                <a href="{% url 'new_order' %}" class="btn-admin btn-admin-primary">
+                    <i class="fas fa-plus"></i>
+                    Nouvelle commande
+                </a>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card live-update">
+                <div class="kpi-icon primary">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="kpi-value">
+                    <span id="todayOrders">{{ today_orders_count }}</span>
+                    <span class="kpi-unit">commandes</span>
+                </div>
+                <div class="kpi-label">Commandes aujourd'hui</div>
+                <div class="kpi-trend {% if orders_change > 0 %}positive{% elif orders_change < 0 %}negative{% else %}neutral{% endif %}">
+                    <i class="fas fa-arrow-{% if orders_change > 0 %}up{% elif orders_change < 0 %}down{% else %}minus{% endif %}"></i>
+                    {% if orders_change != 0 %}{{ orders_change|floatformat:0 }}%{% else %}Même niveau{% endif %} vs hier
+                </div>
+            </div>
+
+            <div class="kpi-card success">
+                <div class="kpi-icon success">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="kpi-value">
+                    <span id="todayRevenue">{{ today_revenue|currency }}</span>
+                    <span class="kpi-unit">{{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</span>
+                </div>
+                <div class="kpi-label">Chiffre d'affaires</div>
+                <div class="kpi-trend {% if revenue_change > 0 %}positive{% elif revenue_change < 0 %}negative{% else %}neutral{% endif %}">
+                    <i class="fas fa-arrow-{% if revenue_change > 0 %}up{% elif revenue_change < 0 %}down{% else %}minus{% endif %}"></i>
+                    {% if revenue_change != 0 %}{{ revenue_change|floatformat:0 }}%{% else %}Même niveau{% endif %} vs hier
+                </div>
+            </div>
+
+            <div class="kpi-card warning">
+                <div class="kpi-icon warning">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="kpi-value">
+                    <span id="avgProcessTime">{{ avg_process_time }}</span>
+                    <span class="kpi-unit">minutes</span>
+                </div>
+                <div class="kpi-label">Temps moyen de traitement</div>
+                <div class="kpi-trend neutral">
+                    <i class="fas fa-minus"></i>
+                    Performance stable
+                </div>
+            </div>
+
+            <div class="kpi-card error">
+                <div class="kpi-icon error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="kpi-value">
+                    <span id="activeAlerts">{{ active_alerts }}</span>
+                    <span class="kpi-unit">alertes</span>
+                </div>
+                <div class="kpi-label">Alertes actives</div>
+                <div class="kpi-trend neutral">
+                    <i class="fas fa-minus"></i>
+                    Même niveau
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Bar -->
+        {% if alerts %}
+        <div class="alerts-bar">
+            <div class="alerts-header">
+                <div class="alerts-title">
+                    <i class="fas fa-bell"></i>
+                    Alertes système
+                </div>
+                <button class="btn-admin btn-admin-outline" onclick="viewAllAlerts()">
+                    Voir tout
+                </button>
+            </div>
+            <div class="alerts-list">
+                {% for alert in alerts %}
+                <div class="alert-item {{ alert.type }}">
+                    <div class="alert-icon">
+                        <i class="fas fa-{% if alert.type == 'critical' %}exclamation-triangle{% elif alert.type == 'warning' %}toner{% else %}info-circle{% endif %}"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title">{{ alert.title }}</div>
+                        <div class="alert-description">{{ alert.message }}</div>
+                    </div>
+                    <div class="alert-time">{{ alert.time }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <!-- Revenue Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Évolution du chiffre d'affaires</h3>
+                    <div class="chart-actions">
+                        <button class="chart-btn active" onclick="setChartPeriod('day')">24h</button>
+                        <button class="chart-btn" onclick="setChartPeriod('week')">7j</button>
+                        <button class="chart-btn" onclick="setChartPeriod('month')">30j</button>
+                    </div>
+                </div>
+                <div class="chart-container" id="revenueChart">
+                    📊 Graphique revenus en temps réel
+                    <br><small>Mise à jour toutes les 5 minutes</small>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Performance aujourd'hui</h3>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--text-medium);">Pages imprimées</span>
+                        <span style="font-weight: 700; font-size: 1.25rem;" id="pagesCount">{{ pages_count|default:0 }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--text-medium);">Commandes terminées</span>
+                        <span style="font-weight: 700; font-size: 1.25rem;" id="completedOrders">{{ completed_orders|default:0 }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--text-medium);">Temps d'attente moyen</span>
+                        <span style="font-weight: 700; font-size: 1.25rem;" id="avgWaitTime">{{ avg_process_time|default:8 }} min</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--text-medium);">Satisfaction client</span>
+                        <span style="font-weight: 700; font-size: 1.25rem; color: var(--success-color);" id="satisfaction">98%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Printers Status -->
+        <div style="margin-bottom: 2rem;">
+            <h2 style="font-weight: 600; margin-bottom: 1.5rem; color: var(--text-dark);">État des imprimantes</h2>
+            <div class="printers-grid">
+                {% for printer in printers %}
+                <div class="printer-card">
+                    <div class="printer-header">
+                        <div class="printer-info">
+                            <h3>{{ printer.name }}</h3>
+                            <div class="printer-model">{{ printer.model }}</div>
+                        </div>
+                        <div class="printer-status {{ printer.status }}">
+                            {% if printer.status == 'online' %}En ligne
+                            {% elif printer.status == 'busy' %}Occupée
+                            {% elif printer.status == 'offline' %}Hors ligne
+                            {% else %}Maintenance
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="printer-stats">
+                        <div class="printer-stat">
+                            <div class="printer-stat-value">{{ printer.current_jobs|default:0 }}</div>
+                            <div class="printer-stat-label">Travaux</div>
+                        </div>
+                        <div class="printer-stat">
+                            <div class="printer-stat-value">{{ printer.total_pages_printed|default:0 }}</div>
+                            <div class="printer-stat-label">Pages</div>
+                        </div>
+                    </div>
+                    
+                    {% if printer.status != 'offline' %}
+                    <div class="printer-progress">
+                        <div class="progress-label">
+                            <span>Toner noir</span>
+                            <span>{{ printer.toner_level }}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill {% if printer.toner_level > 50 %}success{% else %}warning{% endif %}" 
+                                 style="width: {{ printer.toner_level }}%"></div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="printer-progress">
+                        <div class="progress-label">
+                            <span>Statut</span>
+                            <span>Erreur</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%; background: var(--error-color);"></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="printer-actions">
+                        <button class="printer-btn" onclick="viewPrinterDetails({{ printer.id }})">Détails</button>
+                        {% if printer.status == 'offline' %}
+                            <button class="printer-btn" onclick="diagnosticPrinter({{ printer.id }})">Diagnostic</button>
+                        {% else %}
+                            <button class="printer-btn" onclick="pausePrinter({{ printer.id }})">Pause</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Aucune imprimante configurée
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="recent-orders">
+            <div class="orders-header">
+                <div>
+                    <h3 class="orders-title">Commandes récentes</h3>
+                    <p class="orders-subtitle">Dernières commandes reçues et traitées</p>
+                </div>
+            </div>
+            {% if recent_orders %}
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Commande</th>
+                        <th>Client</th>
+                        <th>Statut</th>
+                        <th>Imprimante</th>
+                        <th>Service</th>
+                        <th>Montant</th>
+                        <th>Heure</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    {% for order in recent_orders %}
+                    <tr>
+                        <td class="order-id">
+                            <a href="{% url 'order_detail' order.id %}" class="text-decoration-none">
+                                #{{ order.order_number }}
+                            </a>
+                        </td>
+                        <td>
+                            <div class="customer-info">
+                                <div class="customer-avatar">
+                                    {{ order.customer.first_name.0|default:order.customer.username.0|upper }}{{ order.customer.last_name.0|default:""|upper }}
+                                </div>
+                                <div>
+                                    <div style="font-weight: 500;">{{ order.customer.get_full_name|default:order.customer.username }}</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-medium);">
+                                        {{ order.customer.profile.get_user_type_display|default:"Utilisateur" }}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-{{ order.status }}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ order.printer.name|default:"--" }}</td>
+                        <td>{{ order.service.name|truncatechars:20 }}</td>
+                        <td>{{ order.total_amount|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</td>
+                        <td>{{ order.created_at|date:"H:i" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="p-4 text-center">
+                <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                <p class="text-muted">Aucune commande récente</p>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+</div>
+
+<!-- Auto Refresh Indicator -->
+<div class="auto-refresh" id="autoRefresh">
+    <i class="fas fa-sync refresh-icon"></i>
+    <span>Mise à jour auto</span>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Variables globales
+let refreshInterval;
+let isRealTimeEnabled = true;
+
+// Données pour simulation en temps réel
+const kpiData = {
+    todayOrders: {{ today_orders_count|default:0 }},
+    todayRevenue: {{ today_revenue|default:0 }},
+    avgProcessTime: {{ avg_process_time|default:12 }},
+    activeAlerts: {{ active_alerts|default:0 }},
+    pagesCount: {{ pages_count|default:0 }},
+    completedOrders: {{ completed_orders|default:0 }}
+};
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    startRealTimeUpdates();
+    initializeCharts();
+    simulateOrderFlow();
+});
+
+// Démarrage des mises à jour en temps réel
+function startRealTimeUpdates() {
+    refreshInterval = setInterval(() => {
+        updateKPIs();
+        updatePrinterStatus();
+        updateOrdersTable();
+        showUpdateAnimation();
+    }, 10000); // Mise à jour toutes les 10 secondes
+}
+
+// Mise à jour des KPIs
+function updateKPIs() {
+    // Simulation de variations réalistes
+    if (Math.random() > 0.7) { // 30% de chance
+        kpiData.todayOrders += Math.floor(Math.random() * 2) + 1;
+        kpiData.todayRevenue += Math.floor(Math.random() * 3000) + 500;
+        kpiData.pagesCount += Math.floor(Math.random() * 15) + 5;
+        
+        if (Math.random() > 0.5) {
+            kpiData.completedOrders += 1;
+        }
+        
+        // Mise à jour de l'interface
+        animateCounterUpdate('todayOrders', kpiData.todayOrders);
+        animateCounterUpdate('todayRevenue', kpiData.todayRevenue.toLocaleString());
+        animateCounterUpdate('pagesCount', kpiData.pagesCount.toLocaleString());
+        animateCounterUpdate('completedOrders', kpiData.completedOrders);
+    }
+}
+
+// Animation des compteurs
+function animateCounterUpdate(elementId, newValue) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.transform = 'scale(1.05)';
+        element.style.color = 'var(--primary-color)';
+        
+        setTimeout(() => {
+            element.textContent = newValue;
+            element.style.transform = 'scale(1)';
+            element.style.color = '';
+        }, 150);
+    }
+}
+
+// Mise à jour du statut des imprimantes (simulation)
+function updatePrinterStatus() {
+    // Simulation légère des changements
+    console.log('Mise à jour statut imprimantes...');
+}
+
+// Simulation du flux de commandes
+function simulateOrderFlow() {
+    setInterval(() => {
+        if (Math.random() > 0.8) { // 20% de chance
+            addNewOrderToTable();
+            showNotification('Nouvelle commande reçue', 'info');
+            
+            // Incrémenter le compteur
+            kpiData.todayOrders += 1;
+            animateCounterUpdate('todayOrders', kpiData.todayOrders);
+        }
+    }, 20000); // Toutes les 20 secondes
+}
+
+// Ajout d'une nouvelle commande dans le tableau
+function addNewOrderToTable() {
+    const tbody = document.getElementById('ordersTableBody');
+    if (!tbody) return;
+    
+    const orderNumber = 'CP2025-' + (Math.floor(Math.random() * 9999) + 1000);
+    const customers = [
+        { name: 'Alice Martin', type: 'Étudiant', avatar: 'AM' },
+        { name: 'Pierre Sow', type: 'Particulier', avatar: 'PS' },
+        { name: 'Sarah Kane', type: 'Étudiant', avatar: 'SK' },
+        { name: 'Tech Corp', type: 'Entreprise', avatar: 'TC' }
+    ];
+    
+    const customer = customers[Math.floor(Math.random() * customers.length)];
+    const services = ['Impression A4', 'Badges', 'Cartes visite', 'Flyers'];
+    const service = services[Math.floor(Math.random() * services.length)];
+    const amount = Math.floor(Math.random() * 5000) + 500;
+    const time = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    
+    const newRow = document.createElement('tr');
+    newRow.style.animation = 'slideInMessage 0.3s ease';
+    newRow.innerHTML = `
+        <td class="order-id">#${orderNumber}</td>
+        <td>
+            <div class="customer-info">
+                <div class="customer-avatar">${customer.avatar}</div>
+                <div>
+                    <div style="font-weight: 500;">${customer.name}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-medium);">${customer.type}</div>
+                </div>
+            </div>
+        </td>
+        <td><span class="status-badge status-pending">En attente</span></td>
+        <td>--</td>
+        <td>${service}</td>
+        <td>${amount.toLocaleString()} FCFA</td>
+        <td>${time}</td>
+    `;
+    
+    tbody.insertBefore(newRow, tbody.firstChild);
+    
+    // Limiter à 10 lignes
+    if (tbody.children.length > 10) {
+        tbody.removeChild(tbody.lastChild);
+    }
+}
+
+// Animation de mise à jour
+function showUpdateAnimation() {
+    const elements = document.querySelectorAll('.live-update');
+    elements.forEach(el => {
+        el.classList.add('data-loading');
+        setTimeout(() => {
+            el.classList.remove('data-loading');
+            el.classList.add('data-fresh');
+        }, 300);
+    });
+}
+
+// Système de notifications
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? 'var(--success-color)' : 
+                   type === 'warning' ? 'var(--warning-color)' : 
+                   type === 'error' ? 'var(--error-color)' : 'var(--primary-color)'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        font-weight: 500;
+    `;
+    
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-${type === 'success' ? 'check' : 
+                            type === 'warning' ? 'exclamation-triangle' : 
+                            type === 'error' ? 'times' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => document.body.removeChild(notification), 300);
+    }, 4000);
+}
+
+// Actions des boutons
+function exportReport() {
+    showNotification('Export du rapport en cours...', 'info');
+    setTimeout(() => {
+        showNotification('Rapport exporté avec succès', 'success');
+    }, 2000);
+}
+
+function viewPrinterDetails(printerId) {
+    showNotification(`Affichage des détails de l'imprimante #${printerId}`, 'info');
+}
+
+function pausePrinter(printerId) {
+    showNotification(`Imprimante #${printerId} mise en pause`, 'warning');
+}
+
+function diagnosticPrinter(printerId) {
+    showNotification(`Diagnostic de l'imprimante #${printerId} en cours...`, 'info');
+}
+
+function restartPrinter(printerId) {
+    showNotification(`Redémarrage de l'imprimante #${printerId}...`, 'warning');
+}
+
+function setChartPeriod(period) {
+    document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    showNotification(`Graphique mis à jour : ${period}`, 'info');
+}
+
+function viewAllAlerts() {
+    showNotification('Affichage de toutes les alertes', 'info');
+}
+
+function showNotifications() {
+    showNotification('Notifications ouvertes', 'info');
+}
+
+// Simulation de données de performance
+function initializeCharts() {
+    console.log('Charts initialized');
+}
+
+// Gestion de la visibilité de la page
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        clearInterval(refreshInterval);
+    } else {
+        startRealTimeUpdates();
+        showNotification('Dashboard synchronisé', 'success');
+    }
+});
+
+// Nettoyage lors de la fermeture
+window.addEventListener('beforeunload', function() {
+    clearInterval(refreshInterval);
+});
+
+// Animation CSS pour les nouvelles commandes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInMessage {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Démarrage des simulations après chargement
+setTimeout(() => {
+    showNotification('Dashboard Cash Print Admin chargé', 'success');
+}, 1000);
+
+// Simulation d'événements aléatoires
+setTimeout(() => {
+    showNotification('Pic d\'activité détecté', 'warning');
+}, 15000);
+</script>
+{% endblock %}

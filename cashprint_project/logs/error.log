@@ -1,0 +1,109 @@
+[2025-06-23 22:32:40 +0100] [34353] [INFO] Starting gunicorn 23.0.0
+[2025-06-23 22:32:40 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:40 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:41 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:41 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:42 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:42 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:43 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:43 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:44 +0100] [34353] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:32:44 +0100] [34353] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:32:45 +0100] [34353] [ERROR] Can't connect to ('0.0.0.0', 8000)
+[2025-06-23 22:33:02 +0100] [34452] [INFO] Starting gunicorn 23.0.0
+[2025-06-23 22:33:02 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:02 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:03 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:03 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:04 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:04 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:05 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:05 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:06 +0100] [34452] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2025-06-23 22:33:06 +0100] [34452] [ERROR] connection to ('0.0.0.0', 8000) failed: [Errno 98] Address already in use
+[2025-06-23 22:33:07 +0100] [34452] [ERROR] Can't connect to ('0.0.0.0', 8000)
+[2025-06-23 22:33:27 +0100] [34702] [INFO] Starting gunicorn 23.0.0
+[2025-06-23 22:33:27 +0100] [34702] [INFO] Listening at: http://0.0.0.0:8000 (34702)
+[2025-06-23 22:33:27 +0100] [34702] [INFO] Using worker: sync
+[2025-06-23 22:33:27 +0100] [34708] [INFO] Booting worker with pid: 34708
+[2025-06-23 22:33:27 +0100] [34709] [INFO] Booting worker with pid: 34709
+[2025-06-23 22:33:27 +0100] [34710] [INFO] Booting worker with pid: 34710
+[2025-06-23 22:33:27 +0100] [34711] [INFO] Booting worker with pid: 34711
+[2025-06-23 22:33:27 +0100] [34712] [INFO] Booting worker with pid: 34712
+[2025-06-23 22:33:27 +0100] [34713] [INFO] Booting worker with pid: 34713
+[2025-06-23 22:33:27 +0100] [34714] [INFO] Booting worker with pid: 34714
+[2025-06-23 22:33:27 +0100] [34718] [INFO] Booting worker with pid: 34718
+[2025-06-23 22:33:27 +0100] [34719] [INFO] Booting worker with pid: 34719
+[2025-06-23 22:33:27 +0100] [34720] [INFO] Booting worker with pid: 34720
+[2025-06-23 22:33:27 +0100] [34721] [INFO] Booting worker with pid: 34721
+[2025-06-23 22:33:27 +0100] [34722] [INFO] Booting worker with pid: 34722
+[2025-06-23 22:33:27 +0100] [34723] [INFO] Booting worker with pid: 34723
+[2025-06-23 22:33:27 +0100] [34724] [INFO] Booting worker with pid: 34724
+[2025-06-23 22:33:28 +0100] [34725] [INFO] Booting worker with pid: 34725
+[2025-06-23 22:33:28 +0100] [34726] [INFO] Booting worker with pid: 34726
+[2025-06-23 22:33:28 +0100] [34727] [INFO] Booting worker with pid: 34727
+[2025-06-23 22:33:28 +0100] [34728] [INFO] Booting worker with pid: 34728
+[2025-06-23 22:33:28 +0100] [34729] [INFO] Booting worker with pid: 34729
+[2025-06-23 22:33:28 +0100] [34730] [INFO] Booting worker with pid: 34730
+[2025-06-23 22:33:28 +0100] [34731] [INFO] Booting worker with pid: 34731
+[2025-06-23 22:33:28 +0100] [34732] [INFO] Booting worker with pid: 34732
+[2025-06-23 22:33:28 +0100] [34733] [INFO] Booting worker with pid: 34733
+[2025-06-23 22:33:28 +0100] [34734] [INFO] Booting worker with pid: 34734
+[2025-06-23 22:33:28 +0100] [34735] [INFO] Booting worker with pid: 34735
+[2025-06-23 22:34:03 +0100] [34702] [CRITICAL] WORKER TIMEOUT (pid:34735)
+[2025-06-23 22:34:03 +0100] [34735] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/davy/cash/env/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-23 22:34:03 +0100] [34735] [INFO] Worker exiting (pid: 34735)
+[2025-06-23 22:34:04 +0100] [35067] [INFO] Booting worker with pid: 35067
+[2025-06-24 08:29:26 +0100] [34702] [INFO] Handling signal: int
+[2025-06-24 08:29:26 +0100] [34709] [INFO] Worker exiting (pid: 34709)
+[2025-06-24 08:29:26 +0100] [34720] [INFO] Worker exiting (pid: 34720)
+[2025-06-24 08:29:26 +0100] [34718] [INFO] Worker exiting (pid: 34718)
+[2025-06-24 08:29:26 +0100] [34719] [INFO] Worker exiting (pid: 34719)
+[2025-06-24 08:29:26 +0100] [34721] [INFO] Worker exiting (pid: 34721)
+[2025-06-24 08:29:26 +0100] [34713] [INFO] Worker exiting (pid: 34713)
+[2025-06-24 08:29:26 +0100] [34712] [INFO] Worker exiting (pid: 34712)
+[2025-06-24 08:29:26 +0100] [34714] [INFO] Worker exiting (pid: 34714)
+[2025-06-24 08:29:26 +0100] [34711] [INFO] Worker exiting (pid: 34711)
+[2025-06-24 08:29:26 +0100] [34708] [INFO] Worker exiting (pid: 34708)
+[2025-06-24 08:29:26 +0100] [34724] [INFO] Worker exiting (pid: 34724)
+[2025-06-24 08:29:26 +0100] [34725] [INFO] Worker exiting (pid: 34725)
+[2025-06-24 08:29:26 +0100] [34722] [INFO] Worker exiting (pid: 34722)
+[2025-06-24 08:29:26 +0100] [34710] [INFO] Worker exiting (pid: 34710)
+[2025-06-24 08:29:26 +0100] [35067] [INFO] Worker exiting (pid: 35067)
+[2025-06-24 08:29:26 +0100] [34733] [INFO] Worker exiting (pid: 34733)
+[2025-06-24 08:29:26 +0100] [34726] [INFO] Worker exiting (pid: 34726)
+[2025-06-24 08:29:26 +0100] [34727] [INFO] Worker exiting (pid: 34727)
+[2025-06-24 08:29:26 +0100] [34728] [INFO] Worker exiting (pid: 34728)
+[2025-06-24 08:29:26 +0100] [34734] [INFO] Worker exiting (pid: 34734)
+[2025-06-24 08:29:26 +0100] [34729] [INFO] Worker exiting (pid: 34729)
+[2025-06-24 08:29:26 +0100] [34730] [INFO] Worker exiting (pid: 34730)
+[2025-06-24 08:29:26 +0100] [34732] [INFO] Worker exiting (pid: 34732)
+[2025-06-24 08:29:26 +0100] [34731] [INFO] Worker exiting (pid: 34731)
+[2025-06-24 08:29:26 +0100] [34723] [INFO] Worker exiting (pid: 34723)
+[2025-06-24 08:29:27 +0100] [34702] [INFO] Shutting down: Master

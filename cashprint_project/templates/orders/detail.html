@@ -1,0 +1,395 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load cashprint_filters %}
+
+{% block title %}Commande #{{ order.order_number }} - {{ CASHPRINT_SETTINGS.COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'my_orders' %}">Mes commandes</a></li>
+                    <li class="breadcrumb-item active">#{{ order.order_number }}</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h2 mb-2">Commande #{{ order.order_number }}</h1>
+                    <p class="text-muted">Détails et suivi de votre commande</p>
+                </div>
+                <div>
+                    <span class="badge bg-{{ order.status|badge_color }} fs-6 me-2">
+                        {{ order.get_status_display }}
+                    </span>
+                    {% if order.status == 'pending' %}
+                        <button class="btn btn-outline-danger btn-sm" onclick="cancelOrder()">
+                            <i class="fas fa-times me-1"></i>Annuler
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Order Details -->
+        <div class="col-lg-8">
+            <!-- Order Status Timeline -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-timeline me-2"></i>Suivi de la commande
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item {% if order.status == 'pending' %}active{% else %}completed{% endif %}">
+                            <div class="timeline-marker">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Commande reçue</h6>
+                                <p class="text-muted mb-0">{{ order.created_at|date:"d/m/Y à H:i" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item {% if order.status == 'confirmed' %}active{% elif order.status in 'printing,completed,delivered' %}completed{% endif %}">
+                            <div class="timeline-marker">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Commande confirmée</h6>
+                                {% if order.confirmed_at %}
+                                    <p class="text-muted mb-0">{{ order.confirmed_at|date:"d/m/Y à H:i" }}</p>
+                                {% else %}
+                                    <p class="text-muted mb-0">En attente de confirmation</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="timeline-item {% if order.status == 'printing' %}active{% elif order.status in 'completed,delivered' %}completed{% endif %}">
+                            <div class="timeline-marker">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Impression en cours</h6>
+                                {% if order.started_at %}
+                                    <p class="text-muted mb-0">{{ order.started_at|date:"d/m/Y à H:i" }}</p>
+                                    {% if order.printer %}
+                                        <small class="text-muted">Imprimante: {{ order.printer.name }}</small>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="text-muted mb-0">En attente d'impression</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="timeline-item {% if order.status == 'completed' %}active{% elif order.status == 'delivered' %}completed{% endif %}">
+                            <div class="timeline-marker">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Impression terminée</h6>
+                                {% if order.completed_at %}
+                                    <p class="text-muted mb-0">{{ order.completed_at|date:"d/m/Y à H:i" }}</p>
+                                {% else %}
+                                    <p class="text-muted mb-0">En cours d'impression</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="timeline-item {% if order.status == 'delivered' %}completed{% endif %}">
+                            <div class="timeline-marker">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Commande livrée</h6>
+                                {% if order.delivered_at %}
+                                    <p class="text-muted mb-0">{{ order.delivered_at|date:"d/m/Y à H:i" }}</p>
+                                {% else %}
+                                    <p class="text-muted mb-0">Prête pour récupération</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Details -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Détails du service
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="service-icon-large">
+                                <i class="{{ order.service.icon|default:'fas fa-print' }}"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <h6>{{ order.service.name }}</h6>
+                            <p class="text-muted">{{ order.service.description }}</p>
+                            <div class="service-specs">
+                                <span class="badge bg-light text-dark me-2">
+                                    <i class="fas fa-layer-group me-1"></i>{{ order.quantity }} {{ order.service.unit }}{{ order.quantity|pluralize }}
+                                </span>
+                                {% if order.priority != 'normal' %}
+                                <span class="badge bg-{{ order.priority|priority_color }}">
+                                    <i class="fas fa-flag me-1"></i>{{ order.get_priority_display }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Files -->
+            {% if order.files.all %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-files me-2"></i>Fichiers joints
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for file in order.files.all %}
+                        <div class="col-md-6 mb-3">
+                            <div class="file-item d-flex align-items-center p-2 border rounded">
+                                <i class="fas fa-file-{{ file.file_type|default:'alt' }} fa-2x text-primary me-3"></i>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ file.original_name }}</h6>
+                                    <small class="text-muted">
+                                        {{ file.file_size|filesizeformat }}
+                                        {% if file.page_count %} • {{ file.page_count }} page{{ file.page_count|pluralize }}{% endif %}
+                                    </small>
+                                </div>
+                                <a href="{{ file.file.url }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Special Instructions -->
+            {% if order.special_instructions %}
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-comment-alt me-2"></i>Instructions spéciales
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ order.special_instructions }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <!-- Pricing -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-receipt me-2"></i>Récapitulatif
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="pricing-row">
+                        <span>Prix unitaire</span>
+                        <span>{{ order.base_price|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</span>
+                    </div>
+                    
+                    <div class="pricing-row">
+                        <span>Quantité</span>
+                        <span>{{ order.quantity }}</span>
+                    </div>
+                    
+                    {% if order.options_price > 0 %}
+                    <div class="pricing-row">
+                        <span>Options</span>
+                        <span>{{ order.options_price|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="pricing-row">
+                        <span>Sous-total</span>
+                        <span>{{ order.subtotal|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</span>
+                    </div>
+                    
+                    {% if order.discount_amount > 0 %}
+                    <div class="pricing-row text-success">
+                        <span>Remise {% if user.profile.is_verified_student %}étudiant{% endif %}</span>
+                        <span>-{{ order.discount_amount|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <div class="pricing-row total">
+                        <span><strong>Total payé</strong></span>
+                        <span><strong>{{ order.total_amount|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Options -->
+            {% if order.selected_options.all %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-cogs me-2"></i>Options sélectionnées
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% for order_option in order.selected_options.all %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>{{ order_option.option.name }}</span>
+                        <small class="text-muted">+{{ order_option.price|currency }} {{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Contact -->
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6>Besoin d'aide ?</h6>
+                    <p class="text-muted mb-3">Contactez-nous pour toute question concernant votre commande</p>
+                    <div class="d-grid gap-2">
+                        <a href="https://wa.me/{{ CASHPRINT_SETTINGS.COMPANY_PHONE|phone_format|slice:'1:' }}" class="btn btn-success btn-sm" target="_blank">
+                            <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                        </a>
+                        <a href="tel:{{ CASHPRINT_SETTINGS.COMPANY_PHONE }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-phone me-2"></i>{{ CASHPRINT_SETTINGS.COMPANY_PHONE }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.timeline {
+    position: relative;
+    padding: 1rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e9ecef;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    background: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+}
+
+.timeline-item.active .timeline-marker {
+    background: #ffc107;
+    color: white;
+}
+
+.timeline-item.completed .timeline-marker {
+    background: #28a745;
+    color: white;
+}
+
+.timeline-content h6 {
+    margin-bottom: 0.25rem;
+    color: #495057;
+}
+
+.timeline-item.active .timeline-content h6 {
+    color: #f57c00;
+    font-weight: 600;
+}
+
+.timeline-item.completed .timeline-content h6 {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.service-icon-large {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.pricing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.pricing-row:last-child {
+    border-bottom: none;
+}
+
+.pricing-row.total {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.file-item {
+    transition: all 0.2s ease;
+}
+
+.file-item:hover {
+    background-color: #f8f9fa;
+}
+</style>
+
+<script>
+function cancelOrder() {
+    if (confirm('Êtes-vous sûr de vouloir annuler cette commande ?')) {
+        // Ici on pourrait faire un appel AJAX pour annuler la commande
+        alert('Fonctionnalité d\'annulation à implémenter');
+    }
+}
+</script>
+{% endblock %}
