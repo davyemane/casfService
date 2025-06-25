@@ -31,7 +31,7 @@ user = "cashprint"
 group = "www-data"
 
 # Application
-chdir = BASE_DIR
+chdir = BASE_DIR 
 preload_app = True
 raw_env = [
     'DJANGO_SETTINGS_MODULE=cashprint_project.settings',
