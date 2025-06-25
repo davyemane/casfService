@@ -1,9 +1,7 @@
-# Configuration Gunicorn pour Cash Print - CHEMIN CORRIGÉ
-import multiprocessing
 import os
 
 # CHEMIN CORRIGÉ vers le projet
-BASE_DIR = '/var/www/cashprint/casfService/cashprint_project'
+BASE_DIR = '/var/www/cashprint'
 
 # Liaison et workers
 bind = "127.0.0.1:8000"
@@ -22,7 +20,7 @@ graceful_timeout = 30
 accesslog = os.path.join(BASE_DIR, 'logs/access.log')
 errorlog = os.path.join(BASE_DIR, 'logs/error.log')
 loglevel = "info"
-access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
+access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s>
 
 # Process naming
 proc_name = 'cashprint_gunicorn'
@@ -35,3 +33,7 @@ group = "www-data"
 # Application
 chdir = BASE_DIR
 preload_app = True
+raw_env = [
+    'DJANGO_SETTINGS_MODULE=cashprint_project.settings',
+]
+

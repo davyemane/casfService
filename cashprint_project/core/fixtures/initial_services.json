@@ -1,0 +1,67 @@
+[
+  {
+    "model": "core.service",
+    "pk": 1,
+    "fields": {
+      "name": "Impression Documents",
+      "category": "impression",
+      "description": "Impression de qualité sur tous formats pour vos communications et documents.",
+      "base_price": "25.00",
+      "unit": "page",
+      "is_active": true,
+      "icon": "fas fa-file-alt"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 2,
+    "fields": {
+      "name": "Badges & Cartes",
+      "category": "badges",
+      "description": "Badges professionnels, cartes de visite et cartes scolaires personnalisées.",
+      "base_price": "500.00",
+      "unit": "unité",
+      "is_active": true,
+      "icon": "fas fa-id-card"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 3,
+    "fields": {
+      "name": "Conception Graphique",
+      "category": "signaletique",
+      "description": "Création d'affiches publicitaires sur mesure pour vos campagnes.",
+      "base_price": "5000.00",
+      "unit": "projet",
+      "is_active": true,
+      "icon": "fas fa-palette"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 4,
+    "fields": {
+      "name": "Impression Couleur",
+      "category": "impression",
+      "description": "Impression en couleur haute qualité pour tous vos documents.",
+      "base_price": "50.00",
+      "unit": "page",
+      "is_active": true,
+      "icon": "fas fa-print"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 5,
+    "fields": {
+      "name": "Reliure & Finition",
+      "category": "impression",
+      "description": "Services de reliure et de finition pour vos documents professionnels.",
+      "base_price": "200.00",
+      "unit": "document",
+      "is_active": true,
+      "icon": "fas fa-book"
+    }
+  }
+]

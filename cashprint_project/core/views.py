@@ -113,24 +113,52 @@ def admin_dashboard(request):
 def new_order(request):
     """Créer une nouvelle commande"""
     if request.method == 'POST':
-        # Traitement du formulaire de commande
-        service_id = request.POST.get('service')
+        # DEBUG: Afficher toutes les données POST
+        print("=== DEBUG POST DATA ===")
+        for key, value in request.POST.items():
+            print(f"{key}: {value}")
+        print("=======================")
+        
+        # Récupérer les données du formulaire
+        service_id = request.POST.get('service_id')
         quantity = int(request.POST.get('quantity', 1))
+        payment_method = request.POST.get('payment_method')
+        special_instructions = request.POST.get('special_instructions', '')
         
-        service = get_object_or_404(Service, id=service_id)
+        print(f"DEBUG: service_id={service_id}, quantity={quantity}, payment_method={payment_method}")
         
-        # Calcul du prix
+        # Validations
+        if not service_id:
+            messages.error(request, 'Aucun service sélectionné.')
+            return redirect('new_order')
+        
+        if not payment_method:
+            messages.error(request, 'Veuillez choisir un mode de paiement.')
+            return redirect('new_order')
+        
+        # Récupérer le service
+        try:
+            service = get_object_or_404(Service, id=int(service_id), is_active=True)
+            print(f"DEBUG: Service trouvé: {service.name} (ID: {service.id})")
+        except (ValueError, Service.DoesNotExist):
+            messages.error(request, 'Service invalide ou introuvable.')
+            return redirect('new_order')
+        
+        # Calculs de prix
         base_price = service.base_price
         options_price = 0
         
-        # Options sélectionnées
+        # Gestion des options (si vous en avez)
         selected_options = []
         for key, value in request.POST.items():
             if key.startswith('option_'):
-                option_id = key.replace('option_', '')
-                option = ServiceOption.objects.get(id=option_id)
-                selected_options.append(option)
-                options_price += option.price
+                try:
+                    option_id = key.replace('option_', '')
+                    option = ServiceOption.objects.get(id=option_id)
+                    selected_options.append(option)
+                    options_price += option.price
+                except ServiceOption.DoesNotExist:
+                    continue
         
         subtotal = (base_price + options_price) * quantity
         
@@ -141,32 +169,86 @@ def new_order(request):
         
         total = subtotal - discount
         
+        print(f"DEBUG: Prix calculé - base: {base_price}, total: {total}")
+        
+        # Vérification du solde pour paiement par crédits
+        if payment_method == 'credits':
+            if request.user.profile.credits_balance < total:
+                messages.error(request, f'Solde insuffisant. Solde: {request.user.profile.credits_balance}, Requis: {total}')
+                return redirect('new_order')
+        
         # Création de la commande
-        order = Order.objects.create(
-            customer=request.user,
-            service=service,
-            quantity=quantity,
-            base_price=base_price,
-            options_price=options_price,
-            subtotal=subtotal,
-            discount_amount=discount,
-            total_amount=total,
-            special_instructions=request.POST.get('instructions', '')
-        )
-        
-        # Ajout des options
-        for option in selected_options:
-            OrderOption.objects.create(
-                order=order,
-                option=option,
-                price=option.price
+        try:
+            order = Order.objects.create(
+                customer=request.user,
+                service=service,
+                quantity=quantity,
+                base_price=base_price,
+                options_price=options_price,
+                subtotal=subtotal,
+                discount_amount=discount,
+                total_amount=total,
+                special_instructions=special_instructions
             )
-        
-        messages.success(request, f'Commande {order.order_number} créée avec succès!')
-        return redirect('order_detail', order_id=order.id)
+            
+            print(f"DEBUG: Commande créée: {order.order_number}")
+            
+            # Ajout des options sélectionnées
+            for option in selected_options:
+                OrderOption.objects.create(
+                    order=order,
+                    option=option,
+                    price=option.price
+                )
+            
+            # Déduction des crédits si nécessaire
+            if payment_method == 'credits':
+                request.user.profile.credits_balance -= total
+                request.user.profile.save()
+                
+                # Enregistrer la transaction
+                Transaction.objects.create(
+                    user=request.user,
+                    order=order,
+                    transaction_type='debit',
+                    payment_method='credits',
+                    amount=total,
+                    description=f'Paiement commande {order.order_number}',
+                    reference=f'ORDER-{order.order_number}',
+                    balance_after=request.user.profile.credits_balance
+                )
+            
+            # Gestion des fichiers uploadés
+            files = request.FILES.getlist('files')
+            for file in files:
+                try:
+                    OrderFile.objects.create(
+                        order=order,
+                        file=file,
+                        original_name=file.name,
+                        file_size=file.size,
+                        file_type=file.content_type or 'unknown'
+                    )
+                except Exception as e:
+                    print(f"WARNING: Erreur sauvegarde fichier {file.name}: {e}")
+            
+            messages.success(request, f'Commande {order.order_number} créée avec succès!')
+            return redirect('order_detail', order_id=order.id)
+            
+        except Exception as e:
+            print(f"ERROR: Erreur création commande: {e}")
+            import traceback
+            print(traceback.format_exc())
+            messages.error(request, f'Erreur lors de la création de la commande: {str(e)}')
+            return redirect('new_order')
     
+    # GET request - affichage du formulaire
     services = Service.objects.filter(is_active=True)
-    context = {'services': services}
+    print(f"DEBUG: Services actifs: {services.count()}")
+    
+    context = {
+        'services': services,
+    }
     return render(request, 'orders/new_order.html', context)
 
 @login_required

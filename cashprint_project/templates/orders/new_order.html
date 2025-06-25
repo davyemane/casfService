@@ -320,6 +320,16 @@
         color: var(--text-medium);
     }
 
+    .debug-info {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        font-family: monospace;
+        font-size: 0.85rem;
+    }
+
     @media (max-width: 768px) {
         .service-grid {
             grid-template-columns: 1fr;
@@ -369,6 +379,17 @@
     </div>
     {% endif %}
 
+    <!-- Debug Info (retirez en production) -->
+    {% if debug %}
+    <div class="debug-info">
+        <strong>Debug Info:</strong><br>
+        Services disponibles: {{ services.count }}<br>
+        {% for service in services %}
+        - Service {{ service.id }}: {{ service.name }} ({{ service.base_price }} {{ service.unit }})<br>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- Service Selection -->
     <div class="service-selector">
         <h3 class="mb-3">
@@ -379,7 +400,14 @@
         {% if services %}
         <div class="service-grid">
             {% for service in services %}
-            <div class="service-card" onclick="selectService({{ service.id }}, '{{ service.name|escapejs }}', {{ service.base_price }}, '{{ service.unit|escapejs }}', '{{ service.description|escapejs }}', '{{ service.icon|default:"fas fa-print"|escapejs }}')">
+            <div class="service-card" 
+                 data-service-id="{{ service.id }}"
+                 data-service-name="{{ service.name }}"
+                 data-service-price="{{ service.base_price }}"
+                 data-service-unit="{{ service.unit }}"
+                 data-service-description="{{ service.description }}"
+                 data-service-icon="{{ service.icon|default:'fas fa-print' }}"
+                 onclick="selectServiceFromCard(this)">
                 <div class="service-icon">
                     <i class="{{ service.icon|default:'fas fa-print' }}"></i>
                 </div>
@@ -394,8 +422,19 @@
         </div>
         {% else %}
         <!-- Services par défaut si aucun en base -->
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Aucun service disponible pour le moment. Veuillez contacter l'administrateur.
+        </div>
         <div class="service-grid">
-            <div class="service-card" onclick="selectService(1, 'Impression Documents', 25, 'page', 'Impression de qualité sur tous formats pour vos communications et documents.', 'fas fa-file-alt')">
+            <div class="service-card" 
+                 data-service-id="1"
+                 data-service-name="Impression Documents"
+                 data-service-price="25"
+                 data-service-unit="page"
+                 data-service-description="Impression de qualité sur tous formats pour vos communications et documents."
+                 data-service-icon="fas fa-file-alt"
+                 onclick="selectServiceFromCard(this)">
                 <div class="service-icon">
                     <i class="fas fa-file-alt"></i>
                 </div>
@@ -407,7 +446,14 @@
                 </div>
             </div>
 
-            <div class="service-card" onclick="selectService(2, 'Badges & Cartes', 500, 'unité', 'Badges professionnels, cartes de visite et cartes scolaires personnalisées.', 'fas fa-id-card')">
+            <div class="service-card" 
+                 data-service-id="2"
+                 data-service-name="Badges &amp; Cartes"
+                 data-service-price="500"
+                 data-service-unit="unité"
+                 data-service-description="Badges professionnels, cartes de visite et cartes scolaires personnalisées."
+                 data-service-icon="fas fa-id-card"
+                 onclick="selectServiceFromCard(this)">
                 <div class="service-icon">
                     <i class="fas fa-id-card"></i>
                 </div>
@@ -419,7 +465,14 @@
                 </div>
             </div>
 
-            <div class="service-card" onclick="selectService(3, 'Conception Graphique', 5000, 'projet', 'Création d\'affiches publicitaires sur mesure pour vos campagnes.', 'fas fa-palette')">
+            <div class="service-card" 
+                 data-service-id="3"
+                 data-service-name="Conception Graphique"
+                 data-service-price="5000"
+                 data-service-unit="projet"
+                 data-service-description="Création d'affiches publicitaires sur mesure pour vos campagnes."
+                 data-service-icon="fas fa-palette"
+                 onclick="selectServiceFromCard(this)">
                 <div class="service-icon">
                     <i class="fas fa-palette"></i>
                 </div>
@@ -467,7 +520,7 @@
                         </div>
                         <div class="quantity-selector">
                             <button type="button" class="quantity-btn" onclick="changeQuantity(-1)">-</button>
-                            <input type="number" name="quantity" id="quantity" class="quantity-input" value="1" min="1" max="1000" onchange="updateOrderSummary()">
+                            <input type="number" name="quantity" id="quantity" class="quantity-input" value="1" min="1" max="1000" onchange="updateOrderSummary()" oninput="updateOrderSummary()">
                             <button type="button" class="quantity-btn" onclick="changeQuantity(1)">+</button>
                             <span class="ms-2 text-muted" id="quantityUnit">page(s)</span>
                         </div>
@@ -479,13 +532,13 @@
                             <i class="fas fa-cloud-upload-alt text-primary"></i>
                             Fichiers à imprimer (optionnel)
                         </div>
-                        <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                        <div class="file-upload-area" id="fileUploadArea">
                             <div class="upload-icon">
                                 <i class="fas fa-cloud-upload-alt"></i>
                             </div>
                             <h5>Glissez vos fichiers ici ou cliquez pour sélectionner</h5>
                             <p class="text-muted mb-0">Formats supportés: PDF, DOC, DOCX, JPG, PNG (Max 10MB)</p>
-                            <input type="file" id="fileInput" name="files" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(this)">
+                            <input type="file" id="fileInput" name="files" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display: none;">
                         </div>
                         <div id="fileList" class="mt-2"></div>
                     </div>
@@ -561,7 +614,7 @@
     </div>
 </div>
 
-<!-- JavaScript Config (défini avant le script principal) -->
+<!-- JavaScript Config -->
 <script id="django-config">
     window.DJANGO_CONFIG = {
         userIsStudent: {{ user.profile.is_verified_student|yesno:"true,false" }},
@@ -569,7 +622,8 @@
         userBalance: {{ user.profile.credits_balance|default:0 }},
         currency: '{{ CASHPRINT_SETTINGS.DEFAULT_CURRENCY }}',
         discountPercentage: '{% student_discount_percentage %}',
-        creditsUrl: '/credits/'
+        creditsUrl: '/credits/',
+        debug: {{ debug|yesno:"true,false" }}
     };
 </script>
 {% endblock %}
@@ -612,9 +666,60 @@ function initializeEvents() {
     console.log('Événements initialisés avec succès');
 }
 
+// Nouvelle fonction pour sélectionner un service depuis une carte
+function selectServiceFromCard(cardElement) {
+    console.log('=== DEBUG selectServiceFromCard ===');
+    
+    // Récupérer les données depuis les attributs data
+    const id = cardElement.getAttribute('data-service-id');
+    const name = cardElement.getAttribute('data-service-name');
+    const price = cardElement.getAttribute('data-service-price');
+    const unit = cardElement.getAttribute('data-service-unit');
+    const description = cardElement.getAttribute('data-service-description');
+    const icon = cardElement.getAttribute('data-service-icon');
+    
+    console.log('Données récupérées de la carte:');
+    console.log('ID:', id, '(type:', typeof id, ')');
+    console.log('Nom:', name);
+    console.log('Prix:', price, '(type:', typeof price, ')');
+    console.log('Unité:', unit);
+    console.log('Description:', description);
+    console.log('Icône:', icon);
+    
+    // Appeler la fonction de sélection
+    selectService(id, name, price, unit, description, icon);
+}
+
 // Fonction pour sélectionner un service
 function selectService(id, name, price, unit, description, icon) {
-    console.log('Service sélectionné:', name, 'Prix:', price);
+    console.log('=== DEBUG selectService ===');
+    console.log('Paramètres reçus:', {id, name, price, unit, description, icon});
+    
+    // Vérifier que l'ID est valide
+    if (!id || id === 'undefined' || id === null) {
+        console.error('ERROR: ID de service invalide:', id);
+        showNotification('Erreur: ID de service invalide', 'error');
+        return false;
+    }
+    
+    // Convertir l'ID en nombre
+    const serviceId = parseInt(id);
+    if (isNaN(serviceId)) {
+        console.error('ERROR: ID de service non numérique:', id);
+        showNotification('Erreur: ID de service non numérique', 'error');
+        return false;
+    }
+    
+    // Convertir le prix en nombre
+    const servicePrice = parseFloat(price) || 0;
+    if (servicePrice <= 0) {
+        console.error('ERROR: Prix de service invalide:', price);
+        showNotification('Erreur: Prix de service invalide', 'error');
+        return false;
+    }
+    
+    console.log('ID converti:', serviceId);
+    console.log('Prix converti:', servicePrice);
     
     // Désélectionner tous les autres services
     document.querySelectorAll('.service-card').forEach(card => {
@@ -622,19 +727,24 @@ function selectService(id, name, price, unit, description, icon) {
     });
     
     // Sélectionner le service cliqué
-    const currentCard = event.currentTarget;
-    currentCard.classList.add('selected');
+    const currentCard = event.currentTarget || document.querySelector(`[data-service-id="${id}"]`);
+    if (currentCard) {
+        currentCard.classList.add('selected');
+    }
     
     selectedService = {
-        id: id,
-        name: name,
-        price: price,
-        unit: unit,
-        description: description,
-        icon: icon
+        id: serviceId,
+        name: name || 'Service',
+        price: servicePrice,
+        unit: unit || 'unité',
+        description: description || 'Description du service',
+        icon: icon || 'fas fa-print'
     };
     
-    basePrice = price;
+    basePrice = servicePrice;
+    
+    console.log('Service configuré:', selectedService);
+    console.log('Prix de base:', basePrice);
     
     // Mettre à jour l'interface
     updateServiceInfo();
@@ -652,10 +762,17 @@ function selectService(id, name, price, unit, description, icon) {
     }
     
     console.log('Service configuré avec succès');
+    return true;
 }
 
 function updateServiceInfo() {
-    if (!selectedService) return;
+    if (!selectedService) {
+        console.warn('updateServiceInfo: Aucun service sélectionné');
+        return;
+    }
+    
+    console.log('=== DEBUG updateServiceInfo ===');
+    console.log('Service à mettre à jour:', selectedService);
     
     const serviceIdInput = document.getElementById('selectedServiceId');
     const serviceName = document.getElementById('selectedServiceName');
@@ -663,7 +780,13 @@ function updateServiceInfo() {
     const serviceIcon = document.getElementById('selectedServiceIcon');
     const quantityUnit = document.getElementById('quantityUnit');
     
-    if (serviceIdInput) serviceIdInput.value = selectedService.id;
+    if (serviceIdInput) {
+        serviceIdInput.value = selectedService.id;
+        console.log('Champ service_id mis à jour:', serviceIdInput.value);
+    } else {
+        console.error('Élément selectedServiceId non trouvé');
+    }
+    
     if (serviceName) serviceName.textContent = selectedService.name;
     if (serviceDesc) serviceDesc.textContent = selectedService.description;
     if (serviceIcon) serviceIcon.innerHTML = '<i class="' + selectedService.icon + '"></i>';
@@ -850,11 +973,11 @@ function removeFile(button, fileIndex) {
 }
 
 function initializeDragDrop() {
-    const uploadArea = document.querySelector('.file-upload-area');
+    const uploadArea = document.getElementById('fileUploadArea');
     const fileInput = document.getElementById('fileInput');
     
-    if (!uploadArea) {
-        console.error('Zone de upload non trouvée');
+    if (!uploadArea || !fileInput) {
+        console.error('Zone de upload ou input file non trouvé');
         return;
     }
     
@@ -881,7 +1004,7 @@ function initializeDragDrop() {
         const files = e.dataTransfer.files;
         console.log('Fichiers déposés:', files.length);
         
-        if (fileInput && files.length > 0) {
+        if (files.length > 0) {
             // Simuler la sélection de fichiers
             try {
                 Object.defineProperty(fileInput, 'files', {
@@ -900,19 +1023,15 @@ function initializeDragDrop() {
     // Événement de clic
     uploadArea.addEventListener('click', function(e) {
         e.preventDefault();
-        if (fileInput) {
-            fileInput.click();
-            console.log('Ouverture du sélecteur de fichiers');
-        }
+        fileInput.click();
+        console.log('Ouverture du sélecteur de fichiers');
     });
     
     // Événement pour le changement de fichier
-    if (fileInput) {
-        fileInput.addEventListener('change', function() {
-            console.log('Changement de fichier détecté');
-            handleFileSelect(this);
-        });
-    }
+    fileInput.addEventListener('change', function() {
+        console.log('Changement de fichier détecté');
+        handleFileSelect(this);
+    });
 }
 
 function handleDroppedFiles(files) {
@@ -925,9 +1044,10 @@ function handleDroppedFiles(files) {
 
 function handleFormSubmit(e) {
     e.preventDefault();
-    console.log('Tentative de soumission du formulaire');
+    console.log('=== DEBUG handleFormSubmit ===');
     
     if (!selectedService) {
+        console.error('Aucun service sélectionné');
         showNotification('Veuillez sélectionner un service', 'error');
         return false;
     }
@@ -935,18 +1055,39 @@ function handleFormSubmit(e) {
     const form = e.target;
     const formData = new FormData(form);
     
-    // Vérifier le mode de paiement
+    // Debug: afficher toutes les données du formulaire
+    console.log('Données du formulaire:');
+    for (let [key, value] of formData.entries()) {
+        console.log(`  ${key}: ${value}`);
+    }
+    
+    // Vérifications spécifiques
+    const serviceId = formData.get('service_id');
+    const quantity = formData.get('quantity');
     const paymentMethod = formData.get('payment_method');
+    
+    console.log('Service ID:', serviceId);
+    console.log('Quantité:', quantity);
+    console.log('Mode de paiement:', paymentMethod);
+    
+    if (!serviceId) {
+        console.error('service_id manquant dans le formulaire');
+        showNotification('Erreur: service_id manquant', 'error');
+        return false;
+    }
+    
     if (!paymentMethod) {
+        console.error('Mode de paiement manquant');
         showNotification('Veuillez choisir un mode de paiement', 'error');
         return false;
     }
     
     // Vérifier le solde si paiement par crédits
     if (paymentMethod === 'credits') {
-        const quantityInput = document.getElementById('quantity');
-        const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
-        const totalAmount = Math.round(basePrice * quantity * (1 - (config.userIsStudent ? config.studentDiscount : 0)));
+        const quantityValue = parseInt(quantity) || 1;
+        const totalAmount = Math.round(basePrice * quantityValue * (1 - (config.userIsStudent ? config.studentDiscount : 0)));
+        
+        console.log('Vérification solde - Total:', totalAmount, 'Solde:', config.userBalance);
         
         if (config.userBalance < totalAmount) {
             if (confirm('Votre solde est insuffisant (' + formatCurrency(config.userBalance) + '). Voulez-vous recharger votre compte ?')) {
@@ -967,8 +1108,10 @@ function handleFormSubmit(e) {
         
         // Restaurer le bouton en cas d'erreur
         setTimeout(function() {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
+            if (submitBtn.innerHTML.includes('Création en cours')) {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
         }, 10000);
     }
     

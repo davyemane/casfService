@@ -756,3 +756,125 @@ WARNING 2025-06-23 22:33:07,896 basehttp 34012 129826524493504 "GET /favicon.ico
 WARNING 2025-06-23 22:33:07,896 basehttp 34012 129826524493504 "GET /favicon.ico HTTP/1.1" 404 7277
 INFO 2025-06-23 22:33:11,877 basehttp 34012 129826524493504 "GET /register/ HTTP/1.1" 200 23202
 INFO 2025-06-23 22:33:11,877 basehttp 34012 129826524493504 "GET /register/ HTTP/1.1" 200 23202
+INFO 2025-06-25 07:52:11,935 autoreload 5770 134382817050752 Watching for file changes with StatReloader
+INFO 2025-06-25 07:52:11,935 autoreload 5770 134382817050752 Watching for file changes with StatReloader
+INFO 2025-06-25 07:53:58,709 basehttp 5770 134382547367616 code 400, message Bad request version ('ªª\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06sºº\x00\x00\x00')
+INFO 2025-06-25 07:53:58,709 basehttp 5770 134382547367616 code 400, message Bad request version ('ªª\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06sºº\x00\x00\x00')
+ERROR 2025-06-25 07:53:58,710 basehttp 5770 134382547367616 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:53:58,710 basehttp 5770 134382547367616 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:53:58,714 basehttp 5770 134382547367616 code 400, message Bad request version ('ºº\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x063\x9a\x9a\x00\x00\x00')
+INFO 2025-06-25 07:53:58,714 basehttp 5770 134382547367616 code 400, message Bad request version ('ºº\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x063\x9a\x9a\x00\x00\x00')
+ERROR 2025-06-25 07:53:58,715 basehttp 5770 134382547367616 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:53:58,715 basehttp 5770 134382547367616 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:54:05,929 basehttp 5770 134382766790336 code 400, message Bad request version ('²\x04ê')
+INFO 2025-06-25 07:54:05,929 basehttp 5770 134382766790336 code 400, message Bad request version ('²\x04ê')
+ERROR 2025-06-25 07:54:05,930 basehttp 5770 134382766790336 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:54:05,930 basehttp 5770 134382766790336 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:54:05,933 basehttp 5770 134382766790336 code 400, message Bad request version (')y\x00')
+INFO 2025-06-25 07:54:05,933 basehttp 5770 134382766790336 code 400, message Bad request version (')y\x00')
+ERROR 2025-06-25 07:54:05,934 basehttp 5770 134382766790336 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:54:05,934 basehttp 5770 134382766790336 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:54:05,936 basehttp 5770 134382758397632 code 400, message Bad request version ('::\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x063ZZ\x00\x00\x00')
+INFO 2025-06-25 07:54:05,936 basehttp 5770 134382758397632 code 400, message Bad request version ('::\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x063ZZ\x00\x00\x00')
+ERROR 2025-06-25 07:54:05,937 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:54:05,937 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:54:05,940 basehttp 5770 134382758397632 code 400, message Bad request version ('£\x83>´\x19\x91ì1¾\x17w`ì\x88îê\x07\x18*´X³§«Õ\x81P')
+INFO 2025-06-25 07:54:05,940 basehttp 5770 134382758397632 code 400, message Bad request version ('£\x83>´\x19\x91ì1¾\x17w`ì\x88îê\x07\x18*´X³§«Õ\x81P')
+ERROR 2025-06-25 07:54:05,941 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:54:05,941 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:54:18,847 basehttp 5770 134382758397632 code 400, message Bad request version ('/¡\x16¶Õr~G¶tp\x15Ú\'"V2c¾\x01\x06\x8a){»f\x92TB5¨æYÄÌ\x00À\x19yý(b[llÙ8LÎºIQ')
+INFO 2025-06-25 07:54:18,847 basehttp 5770 134382758397632 code 400, message Bad request version ('/¡\x16¶Õr~G¶tp\x15Ú\'"V2c¾\x01\x06\x8a){»f\x92TB5¨æYÄÌ\x00À\x19yý(b[llÙ8LÎºIQ')
+ERROR 2025-06-25 07:54:18,847 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:54:18,847 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:54:18,850 basehttp 5770 134382758397632 code 400, message Bad request version ("aNJ\x92º\x01\x00\x91'x\xadb\x8c\x89EK8\x97")
+INFO 2025-06-25 07:54:18,850 basehttp 5770 134382758397632 code 400, message Bad request version ("aNJ\x92º\x01\x00\x91'x\xadb\x8c\x89EK8\x97")
+ERROR 2025-06-25 07:54:18,851 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2025-06-25 07:54:18,851 basehttp 5770 134382758397632 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-06-25 07:55:00,151 basehttp 5770 134382547367616 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-25 07:55:00,151 basehttp 5770 134382547367616 "GET / HTTP/1.1" 200 28320
+INFO 2025-06-25 07:55:23,337 basehttp 5770 134382547367616 "GET /login/ HTTP/1.1" 200 12862
+INFO 2025-06-25 07:55:23,337 basehttp 5770 134382547367616 "GET /login/ HTTP/1.1" 200 12862
+INFO 2025-06-25 07:55:36,827 basehttp 5770 134382547367616 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-06-25 07:55:36,827 basehttp 5770 134382547367616 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-06-25 07:55:36,901 basehttp 5770 134382547367616 "GET /dashboard/ HTTP/1.1" 200 46960
+INFO 2025-06-25 07:55:36,901 basehttp 5770 134382547367616 "GET /dashboard/ HTTP/1.1" 200 46960
+INFO 2025-06-25 07:55:52,863 basehttp 5770 134382547367616 "GET /orders/ HTTP/1.1" 200 14734
+INFO 2025-06-25 07:55:52,863 basehttp 5770 134382547367616 "GET /orders/ HTTP/1.1" 200 14734
+INFO 2025-06-25 07:55:58,301 basehttp 5770 134382547367616 "GET /orders/new/ HTTP/1.1" 200 43404
+INFO 2025-06-25 07:55:58,301 basehttp 5770 134382547367616 "GET /orders/new/ HTTP/1.1" 200 43404
+WARNING 2025-06-25 07:57:00,948 log 5770 134382547367616 Not Found: /orders/new/
+WARNING 2025-06-25 07:57:00,948 log 5770 134382547367616 Not Found: /orders/new/
+WARNING 2025-06-25 07:57:00,949 basehttp 5770 134382547367616 "POST /orders/new/ HTTP/1.1" 404 3433
+WARNING 2025-06-25 07:57:00,949 basehttp 5770 134382547367616 "POST /orders/new/ HTTP/1.1" 404 3433
+INFO 2025-06-25 08:07:01,362 autoreload 5770 134382817050752 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:07:01,362 autoreload 5770 134382817050752 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:07:02,029 autoreload 8300 126955254165632 Watching for file changes with StatReloader
+INFO 2025-06-25 08:07:02,029 autoreload 8300 126955254165632 Watching for file changes with StatReloader
+INFO 2025-06-25 08:07:11,784 autoreload 8300 126955254165632 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:07:11,784 autoreload 8300 126955254165632 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:07:12,381 autoreload 8343 138087929274496 Watching for file changes with StatReloader
+INFO 2025-06-25 08:07:12,381 autoreload 8343 138087929274496 Watching for file changes with StatReloader
+WARNING 2025-06-25 08:07:20,667 log 8343 138087879001792 Not Found: /orders/new/
+WARNING 2025-06-25 08:07:20,667 log 8343 138087879001792 Not Found: /orders/new/
+WARNING 2025-06-25 08:07:20,668 basehttp 8343 138087879001792 "POST /orders/new/ HTTP/1.1" 404 3433
+WARNING 2025-06-25 08:07:20,668 basehttp 8343 138087879001792 "POST /orders/new/ HTTP/1.1" 404 3433
+INFO 2025-06-25 08:07:23,719 basehttp 8343 138087879001792 "GET /orders/new/ HTTP/1.1" 200 43404
+INFO 2025-06-25 08:07:23,719 basehttp 8343 138087879001792 "GET /orders/new/ HTTP/1.1" 200 43404
+WARNING 2025-06-25 08:08:02,557 log 8343 138087879001792 Not Found: /orders/new/
+WARNING 2025-06-25 08:08:02,557 log 8343 138087879001792 Not Found: /orders/new/
+WARNING 2025-06-25 08:08:02,559 basehttp 8343 138087879001792 "POST /orders/new/ HTTP/1.1" 404 3433
+WARNING 2025-06-25 08:08:02,559 basehttp 8343 138087879001792 "POST /orders/new/ HTTP/1.1" 404 3433
+INFO 2025-06-25 08:08:31,042 autoreload 8343 138087929274496 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:08:31,042 autoreload 8343 138087929274496 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:08:31,779 autoreload 8576 133479619653760 Watching for file changes with StatReloader
+INFO 2025-06-25 08:08:31,779 autoreload 8576 133479619653760 Watching for file changes with StatReloader
+INFO 2025-06-25 08:08:34,401 autoreload 8576 133479619653760 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:08:34,401 autoreload 8576 133479619653760 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:08:34,822 autoreload 8617 124716133204096 Watching for file changes with StatReloader
+INFO 2025-06-25 08:08:34,822 autoreload 8617 124716133204096 Watching for file changes with StatReloader
+INFO 2025-06-25 08:11:06,126 basehttp 8617 124716082910912 "GET /orders/new/ HTTP/1.1" 200 43619
+INFO 2025-06-25 08:11:06,126 basehttp 8617 124716082910912 "GET /orders/new/ HTTP/1.1" 200 43619
+INFO 2025-06-25 08:11:08,902 basehttp 8617 124716082910912 "GET /orders/new/ HTTP/1.1" 200 43619
+INFO 2025-06-25 08:11:08,902 basehttp 8617 124716082910912 "GET /orders/new/ HTTP/1.1" 200 43619
+WARNING 2025-06-25 08:12:26,181 log 8617 124716082910912 Not Found: /orders/new/
+WARNING 2025-06-25 08:12:26,181 log 8617 124716082910912 Not Found: /orders/new/
+WARNING 2025-06-25 08:12:26,183 basehttp 8617 124716082910912 "POST /orders/new/ HTTP/1.1" 404 3433
+WARNING 2025-06-25 08:12:26,183 basehttp 8617 124716082910912 "POST /orders/new/ HTTP/1.1" 404 3433
+INFO 2025-06-25 08:12:45,592 basehttp 8617 124716082910912 "GET /orders/new/ HTTP/1.1" 200 43619
+INFO 2025-06-25 08:12:45,592 basehttp 8617 124716082910912 "GET /orders/new/ HTTP/1.1" 200 43619
+WARNING 2025-06-25 08:14:22,594 log 8617 124716082910912 Not Found: /orders/new/
+WARNING 2025-06-25 08:14:22,594 log 8617 124716082910912 Not Found: /orders/new/
+WARNING 2025-06-25 08:14:22,595 basehttp 8617 124716082910912 "POST /orders/new/ HTTP/1.1" 404 3433
+WARNING 2025-06-25 08:14:22,595 basehttp 8617 124716082910912 "POST /orders/new/ HTTP/1.1" 404 3433
+INFO 2025-06-25 08:25:27,344 autoreload 8617 124716133204096 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:25:27,344 autoreload 8617 124716133204096 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:25:27,835 autoreload 9517 123870693654656 Watching for file changes with StatReloader
+INFO 2025-06-25 08:25:27,835 autoreload 9517 123870693654656 Watching for file changes with StatReloader
+INFO 2025-06-25 08:25:33,603 autoreload 9517 123870693654656 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:25:33,603 autoreload 9517 123870693654656 /home/davy/cash/cashprint_project/core/views.py changed, reloading.
+INFO 2025-06-25 08:25:34,086 autoreload 9572 133199385546880 Watching for file changes with StatReloader
+INFO 2025-06-25 08:25:34,086 autoreload 9572 133199385546880 Watching for file changes with StatReloader
+INFO 2025-06-25 08:26:19,006 autoreload 9572 133199385546880 /home/davy/cash/cashprint_project/core/urls.py changed, reloading.
+INFO 2025-06-25 08:26:19,006 autoreload 9572 133199385546880 /home/davy/cash/cashprint_project/core/urls.py changed, reloading.
+INFO 2025-06-25 08:26:19,655 autoreload 9604 128952954146944 Watching for file changes with StatReloader
+INFO 2025-06-25 08:26:19,655 autoreload 9604 128952954146944 Watching for file changes with StatReloader
+INFO 2025-06-25 08:26:25,395 autoreload 9604 128952954146944 /home/davy/cash/cashprint_project/core/urls.py changed, reloading.
+INFO 2025-06-25 08:26:25,395 autoreload 9604 128952954146944 /home/davy/cash/cashprint_project/core/urls.py changed, reloading.
+INFO 2025-06-25 08:26:25,909 autoreload 9636 126041250082944 Watching for file changes with StatReloader
+INFO 2025-06-25 08:26:25,909 autoreload 9636 126041250082944 Watching for file changes with StatReloader
+INFO 2025-06-25 08:26:45,029 basehttp 9636 126041200850624 "GET /orders/new/ HTTP/1.1" 200 48073
+INFO 2025-06-25 08:26:45,029 basehttp 9636 126041200850624 "GET /orders/new/ HTTP/1.1" 200 48073
+INFO 2025-06-25 08:26:48,727 basehttp 9636 126041200850624 "GET /orders/new/ HTTP/1.1" 200 48073
+INFO 2025-06-25 08:26:48,727 basehttp 9636 126041200850624 "GET /orders/new/ HTTP/1.1" 200 48073
+WARNING 2025-06-25 08:27:38,666 log 9636 126041200850624 Not Found: /orders/new/
+WARNING 2025-06-25 08:27:38,666 log 9636 126041200850624 Not Found: /orders/new/
+WARNING 2025-06-25 08:27:38,668 basehttp 9636 126041200850624 "POST /orders/new/ HTTP/1.1" 404 3433
+WARNING 2025-06-25 08:27:38,668 basehttp 9636 126041200850624 "POST /orders/new/ HTTP/1.1" 404 3433
+INFO 2025-06-25 08:36:33,028 autoreload 10339 136102507290752 Watching for file changes with StatReloader
+INFO 2025-06-25 08:36:33,028 autoreload 10339 136102507290752 Watching for file changes with StatReloader
+INFO 2025-06-25 08:36:41,035 basehttp 10339 136102457022144 "POST /orders/new/ HTTP/1.1" 302 0
+INFO 2025-06-25 08:36:41,035 basehttp 10339 136102457022144 "POST /orders/new/ HTTP/1.1" 302 0
+INFO 2025-06-25 08:36:41,156 basehttp 10339 136102457022144 "GET /orders/eee93d5e-9a51-4cb0-ba67-858e8d66a5ac/ HTTP/1.1" 200 21569
+INFO 2025-06-25 08:36:41,156 basehttp 10339 136102457022144 "GET /orders/eee93d5e-9a51-4cb0-ba67-858e8d66a5ac/ HTTP/1.1" 200 21569
+INFO 2025-06-25 09:12:03,974 autoreload 10339 136102507290752 /home/davy/cash/cashprint_project/cashprint_project/settings.py changed, reloading.
+INFO 2025-06-25 09:12:03,974 autoreload 10339 136102507290752 /home/davy/cash/cashprint_project/cashprint_project/settings.py changed, reloading.

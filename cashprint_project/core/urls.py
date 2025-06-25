@@ -25,4 +25,7 @@ urlpatterns = [
     # APIs AJAX pour l'administration
     path('ajax/printer-status/', views.ajax_printer_status, name='ajax_printer_status'),
     path('ajax/order-stats/', views.ajax_order_stats, name='ajax_order_stats'),
+
+    # Assurez-vous que cette ligne existe dans urls.py
+    path('orders/<uuid:order_id>/', views.order_detail, name='order_detail'),
 ]
